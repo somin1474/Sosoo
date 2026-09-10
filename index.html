@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>🎵 Pocket Music Editor</title>
+<title>Pocket Music Editor</title>
 
 <style>
 *{
@@ -13,219 +13,182 @@
 
 body{
   margin:0;
-  background:#f3efff;
-  color:#292333;
   font-family:Arial,"Noto Sans KR",sans-serif;
+  background:#f3efff;
+  color:#29213d;
 }
 
 header{
   background:#7655c8;
   color:white;
+  padding:20px 16px;
   text-align:center;
-  padding:22px 15px;
 }
 
 header h1{
   margin:0;
-  font-size:25px;
+  font-size:24px;
 }
 
 header p{
   margin:7px 0 0;
   opacity:.9;
+  font-size:14px;
 }
 
 .container{
-  max-width:850px;
+  max-width:900px;
   margin:auto;
   padding:15px;
 }
 
 .card{
   background:white;
-  border-radius:20px;
+  border-radius:16px;
   padding:18px;
   margin-bottom:15px;
-  box-shadow:0 4px 18px #0001;
+  box-shadow:0 4px 15px rgba(0,0,0,.08);
 }
 
 h2{
   margin-top:0;
+  font-size:19px;
 }
 
 input[type=file]{
   width:100%;
-  padding:13px;
-  background:#f5f1ff;
+  padding:12px;
+  border:2px dashed #9b83df;
   border-radius:12px;
+  background:#faf8ff;
 }
 
 button{
   border:0;
-  border-radius:12px;
+  border-radius:10px;
   padding:11px 15px;
   background:#7655c8;
   color:white;
-  font-size:14px;
+  font-weight:bold;
+  cursor:pointer;
+  margin:4px;
 }
 
-button:active{
-  transform:scale(.97);
-}
-
-button.secondary{
-  background:#e9e1ff;
-  color:#5b3bab;
+button:hover{
+  opacity:.9;
 }
 
 button.danger{
-  background:#e05265;
+  background:#d9536f;
 }
 
-button.dark{
-  background:#403949;
+button.gray{
+  background:#777;
 }
 
 .track{
-  border:2px solid #eee8ff;
-  border-radius:16px;
-  padding:14px;
-  margin-top:12px;
+  border:2px solid #e5defa;
+  border-radius:14px;
+  padding:13px;
+  margin-top:10px;
+  cursor:pointer;
 }
 
 .track.selected{
   border-color:#7655c8;
+  background:#faf8ff;
 }
 
-.track-head{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.track-head strong{
-  flex:1;
+.track-name{
+  font-weight:bold;
+  margin-bottom:8px;
   overflow:hidden;
-  text-overflow:ellipsis;
   white-space:nowrap;
-}
-
-.status{
-  margin-top:8px;
-  font-size:12px;
-  color:#777;
+  text-overflow:ellipsis;
 }
 
 canvas{
   width:100%;
-  height:100px;
+  height:90px;
+  background:#201a30;
+  border-radius:9px;
   display:block;
 }
 
-.wave{
-  margin-top:12px;
-  background:#f0edf7;
-  border-radius:10px;
-  overflow:hidden;
-}
-
 .control{
-  margin-top:15px;
+  margin:15px 0;
 }
 
 .control label{
   display:flex;
   justify-content:space-between;
+  font-weight:bold;
   margin-bottom:6px;
-  font-size:14px;
 }
 
 input[type=range]{
   width:100%;
-  accent-color:#7655c8;
 }
 
 .value{
   color:#7655c8;
-  font-weight:bold;
 }
 
 .row{
   display:flex;
-  gap:8px;
   flex-wrap:wrap;
+  gap:5px;
 }
 
-.notice{
-  background:#f1ebff;
-  padding:13px;
-  border-radius:13px;
-  font-size:13px;
-  line-height:1.6;
-  margin-top:12px;
-}
-
-.timeline{
-  height:100px;
-  background:#eeeafa;
-  border-radius:14px;
-  position:relative;
-  overflow:hidden;
-}
-
-.timelineBlock{
-  position:absolute;
-  height:55px;
-  top:22px;
-  background:#7655c8;
-  color:white;
-  border-radius:9px;
-  padding:18px 8px;
-  font-size:11px;
-  overflow:hidden;
-  white-space:nowrap;
-}
-
-.player{
-  position:sticky;
-  bottom:10px;
-  z-index:10;
-}
-
-.playerButtons{
-  display:flex;
-  justify-content:center;
-  gap:9px;
-}
-
-.playerButtons button{
-  min-width:60px;
-  font-size:20px;
-}
-
-.time{
-  text-align:center;
-  margin-top:10px;
+.row button{
+  flex:1;
+  min-width:90px;
 }
 
 .empty{
+  color:#777;
   text-align:center;
-  color:#999;
-  padding:30px 10px;
+  padding:25px 10px;
 }
 
-@media(max-width:500px){
-  header h1{
-    font-size:22px;
-  }
+.status{
+  padding:12px;
+  border-radius:10px;
+  background:#f1edff;
+  color:#5d42a5;
+  font-size:14px;
+  margin-top:10px;
+}
 
-  .container{
-    padding:10px;
-  }
+.warning{
+  background:#fff4df;
+  color:#805900;
+}
 
-  .card{
-    padding:15px;
-  }
+.pitch-info{
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+  margin:10px 0;
+}
+
+.small{
+  font-size:12px;
+  color:#777;
+  line-height:1.5;
+}
+
+#timeDisplay{
+  text-align:center;
+  font-weight:bold;
+  margin:8px;
+}
+
+footer{
+  text-align:center;
+  color:#888;
+  font-size:12px;
+  padding:20px;
 }
 </style>
 </head>
@@ -234,441 +197,338 @@ input[type=range]{
 
 <header>
   <h1>🎵 Pocket Music Editor</h1>
-  <p>휴대폰에서 사용하는 음악 편집기</p>
+  <p>휴대폰에서 사용하는 간단한 음악 편집기</p>
 </header>
 
 <div class="container">
 
-<!-- 파일 추가 -->
-<div class="card">
-
-<h2>📂 음악 추가</h2>
-
-<input
-  id="fileInput"
-  type="file"
-  accept="audio/*"
-  multiple
->
-
-<div class="notice">
-🎵 MP3, WAV 등의 음악 파일을 선택하세요.<br>
-파일은 이 브라우저에서만 처리됩니다.
-</div>
-
-</div>
-
-
-<!-- 타임라인 -->
-<div class="card">
-
-<h2>🎬 타임라인</h2>
-
-<div id="timeline" class="timeline"></div>
-
-</div>
-
-
-<!-- 트랙 -->
-<div class="card">
-
-<h2>🎵 트랙</h2>
-
-<div id="tracks">
-
-<div class="empty">
-아직 음악이 없습니다.<br>
-위에서 음악 파일을 추가해주세요.
-</div>
-
-</div>
-
-</div>
-
-
-<!-- 편집 -->
-<div
-  id="editor"
-  class="card"
-  style="display:none"
->
-
-<h2>🎚️ 트랙 편집</h2>
-
-<div id="selectedName"></div>
-
-
-<div class="control">
-
-<label>
-<span>🔊 볼륨</span>
-<span id="volumeValue" class="value">100%</span>
-</label>
-
-<input
-  id="volume"
-  type="range"
-  min="0"
-  max="150"
-  value="100"
->
-
-</div>
-
-
-<div class="control">
-
-<label>
-<span>🎚️ 음정</span>
-<span id="pitchValue" class="value">0 반음</span>
-</label>
-
-<input
-  id="pitch"
-  type="range"
-  min="-12"
-  max="12"
-  value="0"
->
-
-</div>
-
-
-<div class="control">
-
-<label>
-<span>⏩ 속도</span>
-<span id="speedValue" class="value">1.00x</span>
-</label>
-
-<input
-  id="speed"
-  type="range"
-  min="0.5"
-  max="2"
-  step="0.01"
-  value="1"
->
-
-</div>
-
-
-<div class="control">
-
-<label>
-<span>✂️ 시작</span>
-<span id="startValue" class="value">0.00s</span>
-</label>
-
-<input
-  id="trimStart"
-  type="range"
-  min="0"
-  max="1"
-  step="0.01"
-  value="0"
->
-
-</div>
-
-
-<div class="control">
-
-<label>
-<span>✂️ 끝</span>
-<span id="endValue" class="value">0.00s</span>
-</label>
-
-<input
-  id="trimEnd"
-  type="range"
-  min="0"
-  max="1"
-  step="0.01"
-  value="1"
->
-
-</div>
-
-
-<div class="control">
-
-<label>
-<span>🔉 저음</span>
-<span id="bassValue" class="value">0 dB</span>
-</label>
-
-<input
-  id="bass"
-  type="range"
-  min="-15"
-  max="15"
-  value="0"
->
-
-</div>
-
-
-<div class="control">
-
-<label>
-<span>🔊 고음</span>
-<span id="trebleValue" class="value">0 dB</span>
-</label>
-
-<input
-  id="treble"
-  type="range"
-  min="-15"
-  max="15"
-  value="0"
->
-
-</div>
-
-
-<div class="control">
-
-<label>
-<span>🔁 에코</span>
-<span id="echoValue" class="value">0%</span>
-</label>
-
-<input
-  id="echo"
-  type="range"
-  min="0"
-  max="70"
-  value="0"
->
-
-</div>
-
-
-<br>
-
-<div class="row">
-
-<button
-  id="muteBtn"
-  class="secondary"
->
-🔇 음소거
-</button>
-
-<button
-  id="resetBtn"
-  class="secondary"
->
-↩️ 초기화
-</button>
-
-<button
-  id="removeBtn"
-  class="danger"
->
-🗑️ 삭제
-</button>
+  <div class="card">
+    <h2>🎧 음악 추가</h2>
+
+    <input
+      id="fileInput"
+      type="file"
+      accept="audio/*"
+      multiple
+    >
+
+    <div id="status" class="status">
+      음악 파일을 추가해주세요.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎚️ 트랙</h2>
+
+    <div id="trackList">
+      <div class="empty">
+        아직 음악이 없습니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎛️ 선택한 트랙 편집</h2>
+
+    <div id="noSelection" class="empty">
+      위에서 트랙을 선택해주세요.
+    </div>
+
+    <div id="editor" style="display:none">
+
+      <div id="selectedName" class="track-name"></div>
+
+      <div class="control">
+        <label>
+          <span>🔊 볼륨</span>
+          <span id="volumeValue" class="value">100%</span>
+        </label>
+
+        <input
+          id="volume"
+          type="range"
+          min="0"
+          max="2"
+          step="0.01"
+          value="1"
+        >
+      </div>
+
+      <div class="control">
+        <label>
+          <span>🎵 음정(Pitch)</span>
+          <span id="pitchValue" class="value">0</span>
+        </label>
+
+        <input
+          id="pitch"
+          type="range"
+          min="-12"
+          max="12"
+          step="1"
+          value="0"
+        >
+
+        <div id="pitchInfo" class="pitch-info">
+          0 반음
+        </div>
+
+        <div class="small">
+          +1 = 반음 높게 / -1 = 반음 낮게<br>
+          +12 = 한 옥타브 높게 / -12 = 한 옥타브 낮게
+        </div>
+      </div>
+
+      <div class="control">
+        <label>
+          <span>⏩ 속도</span>
+          <span id="speedValue" class="value">1.00x</span>
+        </label>
+
+        <input
+          id="speed"
+          type="range"
+          min="0.5"
+          max="2"
+          step="0.01"
+          value="1"
+        >
+      </div>
+
+      <div class="control">
+        <label>
+          <span>✂️ 시작</span>
+          <span id="trimStartValue" class="value">0.00초</span>
+        </label>
+
+        <input
+          id="trimStart"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0"
+        >
+      </div>
+
+      <div class="control">
+        <label>
+          <span>✂️ 끝</span>
+          <span id="trimEndValue" class="value">0.00초</span>
+        </label>
+
+        <input
+          id="trimEnd"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="1"
+        >
+      </div>
+
+      <div class="control">
+        <label>
+          <span>🔊 저음(Bass)</span>
+          <span id="bassValue" class="value">0 dB</span>
+        </label>
+
+        <input
+          id="bass"
+          type="range"
+          min="-20"
+          max="20"
+          step="1"
+          value="0"
+        >
+      </div>
+
+      <div class="control">
+        <label>
+          <span>🔊 고음(Treble)</span>
+          <span id="trebleValue" class="value">0 dB</span>
+        </label>
+
+        <input
+          id="treble"
+          type="range"
+          min="-20"
+          max="20"
+          step="1"
+          value="0"
+        >
+      </div>
+
+      <div class="control">
+        <label>
+          <span>🌊 Echo</span>
+          <span id="echoValue" class="value">0%</span>
+        </label>
+
+        <input
+          id="echo"
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          value="0"
+        >
+      </div>
+
+      <div class="row">
+        <button id="muteBtn">🔇 음소거</button>
+        <button id="resetBtn" class="gray">↩️ 초기화</button>
+        <button id="deleteBtn" class="danger">🗑️ 삭제</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>▶️ 재생</h2>
+
+    <div id="timeDisplay">
+      0.00 / 0.00초
+    </div>
+
+    <div class="row">
+      <button id="playBtn">▶️ 재생</button>
+      <button id="stopBtn" class="gray">⏹ 정지</button>
+    </div>
+
+    <div id="playStatus" class="status">
+      준비됨
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>💾 저장</h2>
+
+    <button id="exportBtn" style="width:100%">
+      💾 WAV로 저장하기
+    </button>
+
+    <div class="small" style="margin-top:10px">
+      음정 변경은 저장된 WAV에도 적용됩니다.<br>
+      음정 처리를 위해 저장 과정은 음악 길이와 비슷한 시간이 걸릴 수 있습니다.
+    </div>
+  </div>
 
 </div>
 
-</div>
-
-
-<!-- 플레이어 -->
-<div class="card player">
-
-<div class="playerButtons">
-
-<button
-  id="backBtn"
-  class="secondary"
->
-⏪
-</button>
-
-<button id="playBtn">
-▶️
-</button>
-
-<button
-  id="stopBtn"
-  class="dark"
->
-⏹️
-</button>
-
-<button
-  id="forwardBtn"
-  class="secondary"
->
-⏩
-</button>
-
-</div>
-
-<div
-  id="timeDisplay"
-  class="time"
->
-00:00 / 00:00
-</div>
-
-</div>
-
-
-<!-- 저장 -->
-<div class="card">
-
-<h2>💾 저장</h2>
-
-<button
-  id="exportBtn"
-  style="width:100%;font-size:16px"
->
-💾 WAV 파일로 저장
-</button>
-
-</div>
-
-</div>
-
+<footer>
+  Pocket Music Editor
+</footer>
 
 <script>
-
-/* =================================
-   오디오 변수
-================================= */
-
 let audioContext = null;
 
 let tracks = [];
-
 let selectedIndex = -1;
 
-let currentSources = [];
+let activeShifters = [];
+let activeTimers = [];
 
 let playing = false;
+let playStartedAt = 0;
+let playTotalDuration = 0;
 
-let playStartedTime = 0;
+let PitchShifterClass = null;
 
 
-/* =================================
-   오디오 초기화
-================================= */
+/* =========================================
+   SoundTouchJS 불러오기
+========================================= */
+
+async function loadPitchEngine(){
+
+  if(PitchShifterClass){
+    return PitchShifterClass;
+  }
+
+  try{
+
+    const module = await import(
+      "https://cdn.jsdelivr.net/npm/soundtouchjs@0.3.0/dist/soundtouch.js"
+    );
+
+    PitchShifterClass = module.PitchShifter;
+
+    if(!PitchShifterClass){
+      throw new Error("PitchShifter를 찾을 수 없습니다.");
+    }
+
+    return PitchShifterClass;
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "음정 처리 엔진을 불러오지 못했습니다.\n" +
+      "인터넷 연결을 확인해주세요."
+    );
+
+    throw error;
+  }
+}
+
+
+/* =========================================
+   AudioContext
+========================================= */
 
 function initAudio(){
 
   if(!audioContext){
 
-    audioContext =
-      new (
-        window.AudioContext ||
-        window.webkitAudioContext
-      )();
+    audioContext = new (
+      window.AudioContext ||
+      window.webkitAudioContext
+    )();
 
   }
 
 }
 
 
-/* =================================
-   파일 선택
-================================= */
+/* =========================================
+   파일 추가
+========================================= */
 
 document
 .getElementById("fileInput")
-.addEventListener(
-  "change",
-  handleFiles
-);
+.addEventListener("change", handleFiles);
 
 
 async function handleFiles(event){
 
-  initAudio();
+  const files = Array.from(event.target.files);
 
-  const files =
-    Array.from(event.target.files);
-
-  if(files.length === 0){
+  if(!files.length){
     return;
   }
 
+  initAudio();
 
-  const tracksBox =
-    document.getElementById("tracks");
-
-
-  /* 처음 추가하는 경우 */
-  if(
-    tracks.length === 0
-  ){
-
-    tracksBox.innerHTML = "";
-
-  }
-
+  setStatus(
+    "status",
+    "음악 파일을 불러오는 중..."
+  );
 
   for(const file of files){
 
-    /* --------------------------------
-       먼저 화면에 표시
-    -------------------------------- */
-
-    const temporary =
-      document.createElement("div");
-
-    temporary.className = "track";
-
-    temporary.innerHTML = `
-
-      <div class="track-head">
-
-        <span>🎵</span>
-
-        <strong>
-          ${escapeHTML(file.name)}
-        </strong>
-
-      </div>
-
-      <div class="status">
-        ⏳ 음악 파일 읽는 중...
-      </div>
-
-    `;
-
-    tracksBox.appendChild(
-      temporary
-    );
-
-
     try{
 
-      /* --------------------------------
-         FileReader로 읽기
-      -------------------------------- */
-
       const arrayBuffer =
-        await readFile(file);
-
-
-      /* --------------------------------
-         오디오 디코딩
-      -------------------------------- */
+        await file.arrayBuffer();
 
       const buffer =
-        await decodeAudio(
+        await audioContext.decodeAudioData(
           arrayBuffer
         );
 
-
-      /* --------------------------------
-         실제 트랙 생성
-      -------------------------------- */
-
-      const track = {
+      tracks.push({
 
         name:file.name,
 
@@ -692,228 +552,111 @@ async function handleFiles(event){
 
         muted:false
 
-      };
-
-
-      tracks.push(track);
-
-
-      /* 임시 표시 제거 */
-      temporary.remove();
-
-
-      /* 화면 다시 그리기 */
-      renderTracks();
-
-      updateTimeline();
-
+      });
 
     }catch(error){
 
       console.error(error);
 
-      temporary.querySelector(
-        ".status"
-      ).textContent =
-        "❌ 이 음악 파일을 읽지 못했습니다.";
-
-      temporary.querySelector(
-        ".status"
-      ).style.color =
-        "#e05265";
+      alert(
+        file.name +
+        "\n파일을 불러오지 못했습니다."
+      );
 
     }
 
   }
 
+  renderTracks();
+
+  if(selectedIndex === -1 && tracks.length){
+    selectTrack(0);
+  }
+
+  setStatus(
+    "status",
+    tracks.length +
+    "개의 음악이 추가되었습니다."
+  );
 
   event.target.value = "";
 
 }
 
 
-/* =================================
-   FileReader
-================================= */
-
-function readFile(file){
-
-  return new Promise(
-    (resolve,reject)=>{
-
-      const reader =
-        new FileReader();
-
-      reader.onload =
-        () => resolve(
-          reader.result
-        );
-
-      reader.onerror =
-        () => reject(
-          reader.error
-        );
-
-      reader.readAsArrayBuffer(
-        file
-      );
-
-    }
-  );
-
-}
-
-
-/* =================================
-   Audio Decode
-================================= */
-
-function decodeAudio(arrayBuffer){
-
-  return new Promise(
-    (resolve,reject)=>{
-
-      audioContext.decodeAudioData(
-
-        arrayBuffer,
-
-        buffer => resolve(buffer),
-
-        error => reject(error)
-
-      );
-
-    }
-  );
-
-}
-
-
-/* =================================
+/* =========================================
    트랙 표시
-================================= */
+========================================= */
 
 function renderTracks(){
 
-  const box =
-    document.getElementById(
-      "tracks"
-    );
+  const list =
+    document.getElementById("trackList");
 
-  box.innerHTML =
-    "<h2>🎵 트랙</h2>";
+  list.innerHTML = "";
 
+  if(!tracks.length){
 
-  if(tracks.length === 0){
-
-    box.innerHTML += `
-
-      <div class="empty">
-
-        아직 음악이 없습니다.<br>
-        위에서 음악 파일을 추가해주세요.
-
-      </div>
-
-    `;
+    list.innerHTML =
+      '<div class="empty">아직 음악이 없습니다.</div>';
 
     return;
-
   }
 
+  tracks.forEach((track,index)=>{
 
-  tracks.forEach(
-    (track,index)=>{
+    const div =
+      document.createElement("div");
 
-      const div =
-        document.createElement(
-          "div"
-        );
+    div.className =
+      "track" +
+      (index === selectedIndex
+        ? " selected"
+        : "");
 
-      div.className =
-        "track" +
-        (
-          index === selectedIndex
-          ? " selected"
-          : ""
-        );
+    const canvas =
+      document.createElement("canvas");
 
+    canvas.width = 800;
+    canvas.height = 90;
 
-      div.innerHTML = `
+    drawWave(canvas,track.buffer);
 
-        <div class="track-head">
+    const name =
+      document.createElement("div");
 
-          <span>🎵</span>
+    name.className = "track-name";
 
-          <strong>
-            ${escapeHTML(track.name)}
-          </strong>
+    name.textContent =
+      (track.muted ? "🔇 " : "🎵 ") +
+      track.name;
 
-          <button
-            class="secondary"
-            data-index="${index}"
-          >
-            편집
-          </button>
+    div.appendChild(name);
+    div.appendChild(canvas);
 
-        </div>
+    div.addEventListener(
+      "click",
+      ()=>selectTrack(index)
+    );
 
-        <div class="status">
+    list.appendChild(div);
 
-          ${track.buffer.duration.toFixed(2)}초
-
-        </div>
-
-        <div class="wave">
-
-          <canvas
-            id="wave-${index}"
-            width="800"
-            height="200"
-          ></canvas>
-
-        </div>
-
-      `;
-
-
-      div
-      .querySelector("button")
-      .addEventListener(
-        "click",
-        ()=>{
-          selectTrack(index);
-        }
-      );
-
-
-      box.appendChild(div);
-
-
-      drawWave(
-        track,
-        document.getElementById(
-          "wave-" + index
-        )
-      );
-
-    }
-  );
+  });
 
 }
 
 
-/* =================================
-   파형 그리기
-================================= */
+/* =========================================
+   파형
+========================================= */
 
-function drawWave(
-  track,
-  canvas
-){
+function drawWave(canvas,buffer){
 
   const ctx =
     canvas.getContext("2d");
+
+  const data =
+    buffer.getChannelData(0);
 
   ctx.clearRect(
     0,
@@ -922,159 +665,102 @@ function drawWave(
     canvas.height
   );
 
+  ctx.fillStyle = "#201a30";
 
-  const data =
-    track.buffer.getChannelData(0);
+  ctx.fillRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
 
-
-  const step =
-    Math.ceil(
-      data.length /
-      canvas.width
-    );
-
-
-  const center =
-    canvas.height / 2;
-
+  ctx.strokeStyle = "#9b83df";
 
   ctx.beginPath();
 
+  const step =
+    Math.ceil(data.length / canvas.width);
 
-  for(
-    let x=0;
-    x<canvas.width;
-    x++
-  ){
-
-    const start =
-      x * step;
-
-    const end =
-      Math.min(
-        start + step,
-        data.length
-      );
-
+  for(let x=0;x<canvas.width;x++){
 
     let min=1;
     let max=-1;
 
+    const start=x*step;
 
     for(
       let i=start;
-      i<end;
+      i<start+step && i<data.length;
       i++
     ){
 
-      const v=data[i];
+      const value=data[i];
 
-      if(v<min) min=v;
-      if(v>max) max=v;
+      if(value<min) min=value;
+      if(value>max) max=value;
 
     }
 
+    const y1 =
+      (1-min)*canvas.height/2;
 
-    ctx.moveTo(
-      x,
-      center + min * center
-    );
+    const y2 =
+      (1-max)*canvas.height/2;
 
-    ctx.lineTo(
-      x,
-      center + max * center
-    );
+    ctx.moveTo(x,y1);
+    ctx.lineTo(x,y2);
 
   }
-
 
   ctx.stroke();
 
 }
 
 
-/* =================================
+/* =========================================
    트랙 선택
-================================= */
+========================================= */
 
 function selectTrack(index){
 
+  if(index<0 || index>=tracks.length){
+    return;
+  }
+
   selectedIndex=index;
 
-  const track=
-    tracks[index];
-
+  const track=tracks[index];
 
   document
-  .getElementById("editor")
-  .style.display="block";
-
-
-  document
-  .getElementById("selectedName")
-  .textContent=
-    track.name;
-
+    .getElementById("noSelection")
+    .style.display="none";
 
   document
-  .getElementById("volume")
-  .value=
-    track.volume*100;
-
+    .getElementById("editor")
+    .style.display="block";
 
   document
-  .getElementById("pitch")
-  .value=
-    track.pitch;
+    .getElementById("selectedName")
+    .textContent=track.name;
 
+  const trimStart =
+    document.getElementById("trimStart");
 
-  document
-  .getElementById("speed")
-  .value=
-    track.speed;
+  const trimEnd =
+    document.getElementById("trimEnd");
 
+  trimStart.max=track.buffer.duration;
+  trimEnd.max=track.buffer.duration;
 
-  document
-  .getElementById("trimStart")
-  .max=
-    track.buffer.duration;
+  trimStart.value=track.trimStart;
+  trimEnd.value=track.trimEnd;
 
-
-  document
-  .getElementById("trimStart")
-  .value=
-    track.trimStart;
-
-
-  document
-  .getElementById("trimEnd")
-  .max=
-    track.buffer.duration;
-
-
-  document
-  .getElementById("trimEnd")
-  .value=
-    track.trimEnd;
-
-
-  document
-  .getElementById("bass")
-  .value=
-    track.bass;
-
-
-  document
-  .getElementById("treble")
-  .value=
-    track.treble;
-
-
-  document
-  .getElementById("echo")
-  .value=
-    track.echo;
-
+  document.getElementById("volume").value=track.volume;
+  document.getElementById("pitch").value=track.pitch;
+  document.getElementById("speed").value=track.speed;
+  document.getElementById("bass").value=track.bass;
+  document.getElementById("treble").value=track.treble;
+  document.getElementById("echo").value=track.echo;
 
   updateLabels();
 
@@ -1083,19 +769,17 @@ function selectTrack(index){
 }
 
 
-/* =================================
-   편집값
-================================= */
+/* =========================================
+   선택된 트랙
+========================================= */
 
 function getSelected(){
 
   if(
-    selectedIndex < 0 ||
-    !tracks[selectedIndex]
+    selectedIndex<0 ||
+    selectedIndex>=tracks.length
   ){
-
     return null;
-
   }
 
   return tracks[selectedIndex];
@@ -1103,784 +787,714 @@ function getSelected(){
 }
 
 
-/* 볼륨 */
+/* =========================================
+   슬라이더
+========================================= */
 
 document
 .getElementById("volume")
-.addEventListener(
-  "input",
-  function(){
+.addEventListener("input",function(){
 
-    const t=getSelected();
+  const track=getSelected();
 
-    if(!t)return;
+  if(!track)return;
 
-    t.volume=
-      Number(this.value)/100;
+  track.volume=parseFloat(this.value);
 
-    updateLabels();
+  updateLabels();
 
-  }
-);
+});
 
-
-/* 음정 */
 
 document
 .getElementById("pitch")
-.addEventListener(
-  "input",
-  function(){
+.addEventListener("input",function(){
 
-    const t=getSelected();
+  const track=getSelected();
 
-    if(!t)return;
+  if(!track)return;
 
-    t.pitch=
-      Number(this.value);
+  track.pitch=parseInt(this.value);
 
-    updateLabels();
+  updateLabels();
 
-  }
-);
+});
 
-
-/* 속도 */
 
 document
 .getElementById("speed")
-.addEventListener(
-  "input",
-  function(){
+.addEventListener("input",function(){
 
-    const t=getSelected();
+  const track=getSelected();
 
-    if(!t)return;
+  if(!track)return;
 
-    t.speed=
-      Number(this.value);
+  track.speed=parseFloat(this.value);
 
-    updateLabels();
+  updateLabels();
 
-  }
-);
+});
 
-
-/* 시작 */
 
 document
 .getElementById("trimStart")
-.addEventListener(
-  "input",
-  function(){
+.addEventListener("input",function(){
 
-    const t=getSelected();
+  const track=getSelected();
 
-    if(!t)return;
+  if(!track)return;
 
-    let v=
-      Number(this.value);
+  let value=parseFloat(this.value);
 
+  if(value>=track.trimEnd){
 
-    if(v>=t.trimEnd){
+    value=Math.max(
+      0,
+      track.trimEnd-0.01
+    );
 
-      v=
-        Math.max(
-          0,
-          t.trimEnd-0.01
-        );
-
-      this.value=v;
-
-    }
-
-
-    t.trimStart=v;
-
-    updateLabels();
-
-    renderTracks();
+    this.value=value;
 
   }
-);
 
+  track.trimStart=value;
 
-/* 끝 */
+  updateLabels();
+
+});
+
 
 document
 .getElementById("trimEnd")
-.addEventListener(
-  "input",
-  function(){
+.addEventListener("input",function(){
 
-    const t=getSelected();
+  const track=getSelected();
 
-    if(!t)return;
+  if(!track)return;
 
-    let v=
-      Number(this.value);
+  let value=parseFloat(this.value);
 
+  if(value<=track.trimStart){
 
-    if(v<=t.trimStart){
+    value=Math.min(
+      track.buffer.duration,
+      track.trimStart+0.01
+    );
 
-      v=
-        Math.min(
-          t.buffer.duration,
-          t.trimStart+0.01
-        );
-
-      this.value=v;
-
-    }
-
-
-    t.trimEnd=v;
-
-    updateLabels();
-
-    renderTracks();
+    this.value=value;
 
   }
-);
 
+  track.trimEnd=value;
 
-/* 저음 */
+  updateLabels();
+
+});
+
 
 document
 .getElementById("bass")
-.addEventListener(
-  "input",
-  function(){
+.addEventListener("input",function(){
 
-    const t=getSelected();
+  const track=getSelected();
 
-    if(!t)return;
+  if(!track)return;
 
-    t.bass=
-      Number(this.value);
+  track.bass=parseFloat(this.value);
 
-    updateLabels();
+  updateLabels();
 
-  }
-);
+});
 
-
-/* 고음 */
 
 document
 .getElementById("treble")
-.addEventListener(
-  "input",
-  function(){
+.addEventListener("input",function(){
 
-    const t=getSelected();
+  const track=getSelected();
 
-    if(!t)return;
+  if(!track)return;
 
-    t.treble=
-      Number(this.value);
+  track.treble=parseFloat(this.value);
 
-    updateLabels();
+  updateLabels();
 
-  }
-);
+});
 
-
-/* 에코 */
 
 document
 .getElementById("echo")
-.addEventListener(
-  "input",
-  function(){
+.addEventListener("input",function(){
 
-    const t=getSelected();
+  const track=getSelected();
 
-    if(!t)return;
+  if(!track)return;
 
-    t.echo=
-      Number(this.value);
+  track.echo=parseFloat(this.value);
 
-    updateLabels();
+  updateLabels();
 
-  }
-);
+});
 
 
-/* =================================
+/* =========================================
    라벨
-================================= */
+========================================= */
 
 function updateLabels(){
 
-  const t=getSelected();
+  const track=getSelected();
 
-  if(!t)return;
+  if(!track)return;
 
+  document.getElementById("volumeValue")
+    .textContent=
+    Math.round(track.volume*100)+"%";
 
-  document
-  .getElementById("volumeValue")
-  .textContent=
-    Math.round(
-      t.volume*100
-    )+"%";
+  const pitchText =
+    track.pitch > 0
+      ? "+"+track.pitch
+      : String(track.pitch);
 
+  document.getElementById("pitchValue")
+    .textContent=pitchText;
 
-  document
-  .getElementById("pitchValue")
-  .textContent=
-    (t.pitch>0?"+":"")+
-    t.pitch+
-    " 반음";
+  document.getElementById("pitchInfo")
+    .textContent=
+    pitchText+" 반음";
 
+  document.getElementById("speedValue")
+    .textContent=
+    track.speed.toFixed(2)+"x";
 
-  document
-  .getElementById("speedValue")
-  .textContent=
-    t.speed.toFixed(2)+"x";
+  document.getElementById("trimStartValue")
+    .textContent=
+    track.trimStart.toFixed(2)+"초";
 
+  document.getElementById("trimEndValue")
+    .textContent=
+    track.trimEnd.toFixed(2)+"초";
 
-  document
-  .getElementById("startValue")
-  .textContent=
-    t.trimStart.toFixed(2)+"s";
+  document.getElementById("bassValue")
+    .textContent=
+    track.bass+" dB";
 
+  document.getElementById("trebleValue")
+    .textContent=
+    track.treble+" dB";
 
-  document
-  .getElementById("endValue")
-  .textContent=
-    t.trimEnd.toFixed(2)+"s";
+  document.getElementById("echoValue")
+    .textContent=
+    track.echo+"%";
 
-
-  document
-  .getElementById("bassValue")
-  .textContent=
-    (t.bass>0?"+":"")+
-    t.bass+" dB";
-
-
-  document
-  .getElementById("trebleValue")
-  .textContent=
-    (t.treble>0?"+":"")+
-    t.treble+" dB";
-
-
-  document
-  .getElementById("echoValue")
-  .textContent=
-    t.echo+"%";
-
-}
-
-
-/* =================================
-   음소거
-================================= */
-
-document
-.getElementById("muteBtn")
-.addEventListener(
-  "click",
-  function(){
-
-    const t=getSelected();
-
-    if(!t)return;
-
-    t.muted=!t.muted;
-
-    this.textContent=
-      t.muted
+  document.getElementById("muteBtn")
+    .textContent=
+    track.muted
       ? "🔊 음소거 해제"
       : "🔇 음소거";
 
-  }
-);
+}
 
 
-/* =================================
+/* =========================================
+   음소거
+========================================= */
+
+document
+.getElementById("muteBtn")
+.addEventListener("click",function(){
+
+  const track=getSelected();
+
+  if(!track)return;
+
+  track.muted=!track.muted;
+
+  updateLabels();
+  renderTracks();
+
+});
+
+
+/* =========================================
    초기화
-================================= */
+========================================= */
 
 document
 .getElementById("resetBtn")
-.addEventListener(
-  "click",
-  function(){
+.addEventListener("click",function(){
 
-    const t=getSelected();
+  const track=getSelected();
 
-    if(!t)return;
+  if(!track)return;
 
-    t.volume=1;
-    t.pitch=0;
-    t.speed=1;
-    t.trimStart=0;
-    t.trimEnd=
-      t.buffer.duration;
-    t.bass=0;
-    t.treble=0;
-    t.echo=0;
-    t.muted=false;
+  track.volume=1;
+  track.pitch=0;
+  track.speed=1;
+  track.trimStart=0;
+  track.trimEnd=track.buffer.duration;
+  track.bass=0;
+  track.treble=0;
+  track.echo=0;
+  track.muted=false;
 
-    selectTrack(
-      selectedIndex
-    );
+  selectTrack(selectedIndex);
 
-  }
-);
+});
 
 
-/* =================================
+/* =========================================
    삭제
-================================= */
+========================================= */
 
 document
-.getElementById("removeBtn")
-.addEventListener(
-  "click",
-  function(){
+.getElementById("deleteBtn")
+.addEventListener("click",function(){
 
-    if(selectedIndex<0)
-      return;
-
-
-    stopPlayback();
-
-
-    tracks.splice(
-      selectedIndex,
-      1
-    );
-
-
-    selectedIndex=-1;
-
-
-    document
-    .getElementById("editor")
-    .style.display="none";
-
-
-    renderTracks();
-
-    updateTimeline();
-
-  }
-);
-
-
-/* =================================
-   재생
-================================= */
-
-async function play(){
-
-  if(tracks.length===0){
-
-    alert(
-      "먼저 음악 파일을 추가해주세요."
-    );
-
-    return;
-
-  }
-
-
-  initAudio();
-
-  await audioContext.resume();
-
+  if(selectedIndex<0)return;
 
   stopPlayback();
 
+  tracks.splice(selectedIndex,1);
 
-  const now=
-    audioContext.currentTime;
+  if(!tracks.length){
 
+    selectedIndex=-1;
 
-  currentSources=[];
+    document
+      .getElementById("noSelection")
+      .style.display="block";
 
+    document
+      .getElementById("editor")
+      .style.display="none";
 
-  tracks.forEach(
-    track=>{
+  }else{
 
-      if(track.muted)
-        return;
-
-
-      const source=
-        audioContext
-        .createBufferSource();
-
-
-      source.buffer=
-        track.buffer;
-
-
-      /*
-        현재 버전에서는
-        속도를 안정적으로 적용.
-      */
-
-      source.playbackRate.value=
-        track.speed;
-
-
-      const gain=
-        audioContext
-        .createGain();
-
-
-      gain.gain.value=
-        track.volume;
-
-
-      const bass=
-        audioContext
-        .createBiquadFilter();
-
-      bass.type="lowshelf";
-      bass.frequency.value=180;
-      bass.gain.value=track.bass;
-
-
-      const treble=
-        audioContext
-        .createBiquadFilter();
-
-      treble.type="highshelf";
-      treble.frequency.value=3000;
-      treble.gain.value=track.treble;
-
-
-      source.connect(gain);
-
-      gain.connect(bass);
-
-      bass.connect(treble);
-
-      treble.connect(
-        audioContext.destination
+    selectedIndex=
+      Math.min(
+        selectedIndex,
+        tracks.length-1
       );
 
+    selectTrack(selectedIndex);
 
-      const duration=
-        track.trimEnd-
-        track.trimStart;
+  }
 
+  renderTracks();
 
-      source.start(
-        now,
-        track.trimStart,
-        duration
-      );
+});
 
 
-      currentSources.push(
-        source
-      );
+/* =========================================
+   효과 체인
+========================================= */
 
-    }
-  );
+function connectEffects(
+  context,
+  source,
+  track,
+  destination
+){
+
+  const gain =
+    context.createGain();
+
+  gain.gain.value =
+    track.muted
+      ? 0
+      : track.volume;
+
+  const bass =
+    context.createBiquadFilter();
+
+  bass.type="lowshelf";
+  bass.frequency.value=180;
+  bass.gain.value=track.bass;
+
+  const treble =
+    context.createBiquadFilter();
+
+  treble.type="highshelf";
+  treble.frequency.value=3000;
+  treble.gain.value=track.treble;
+
+  source.connect(gain);
+
+  gain.connect(bass);
+
+  bass.connect(treble);
+
+  treble.connect(destination);
 
 
-  playing=true;
+  /* Echo */
 
-  playStartedTime=
-    performance.now();
+  if(track.echo>0){
 
+    const delay =
+      context.createDelay(2);
 
-  document
-  .getElementById("playBtn")
-  .textContent="⏸️";
+    delay.delayTime.value=.25;
 
+    const echoGain =
+      context.createGain();
 
-  updateTime();
+    echoGain.gain.value=
+      track.echo/100;
+
+    treble.connect(delay);
+
+    delay.connect(echoGain);
+
+    echoGain.connect(destination);
+
+  }
 
 }
 
 
-/* =================================
-   정지
-================================= */
-
-function stopPlayback(){
-
-  currentSources.forEach(
-    source=>{
-
-      try{
-        source.stop();
-      }catch(e){}
-
-    }
-  );
-
-
-  currentSources=[];
-
-  playing=false;
-
-
-  document
-  .getElementById("playBtn")
-  .textContent="▶️";
-
-}
-
-
-/* =================================
-   재생 버튼
-================================= */
-
-document
-.getElementById("playBtn")
-.addEventListener(
-  "click",
-  function(){
-
-    if(playing){
-
-      stopPlayback();
-
-    }else{
-
-      play();
-
-    }
-
-  }
-);
-
-
-document
-.getElementById("stopBtn")
-.addEventListener(
-  "click",
-  stopPlayback
-);
-
-
-/* =================================
-   앞/뒤
-================================= */
-
-document
-.getElementById("backBtn")
-.addEventListener(
-  "click",
-  function(){
-
-    alert(
-      "타임라인 위치 이동 기능은 다음 업데이트에서 추가됩니다."
-    );
-
-  }
-);
-
-
-document
-.getElementById("forwardBtn")
-.addEventListener(
-  "click",
-  function(){
-
-    alert(
-      "타임라인 위치 이동 기능은 다음 업데이트에서 추가됩니다."
-    );
-
-  }
-);
-
-
-/* =================================
+/* =========================================
    전체 길이
-================================= */
+========================================= */
 
 function getTotalDuration(){
 
-  let max=0;
+  let total=0;
 
+  for(const track of tracks){
 
-  tracks.forEach(
-    track=>{
+    if(track.muted)continue;
 
-      const duration=
-        (
-          track.trimEnd-
-          track.trimStart
-        ) /
-        track.speed;
+    const duration =
+      Math.max(
+        0,
+        track.trimEnd-track.trimStart
+      ) / track.speed;
 
-
-      if(duration>max)
-        max=duration;
-
+    if(duration>total){
+      total=duration;
     }
-  );
-
-
-  return max;
-
-}
-
-
-/* =================================
-   시간 업데이트
-================================= */
-
-function updateTime(){
-
-  if(!playing)
-    return;
-
-
-  const elapsed=
-    (
-      performance.now()-
-      playStartedTime
-    )/1000;
-
-
-  const total=
-    getTotalDuration();
-
-
-  document
-  .getElementById("timeDisplay")
-  .textContent=
-    formatTime(elapsed)+
-    " / "+
-    formatTime(total);
-
-
-  if(elapsed>=total){
-
-    stopPlayback();
-
-    document
-    .getElementById("timeDisplay")
-    .textContent=
-      "00:00 / "+
-      formatTime(total);
-
-    return;
 
   }
 
+  return total;
+}
 
-  requestAnimationFrame(
-    updateTime
-  );
+
+/* =========================================
+   재생 정지
+========================================= */
+
+function stopPlayback(){
+
+  for(const shifter of activeShifters){
+
+    try{
+      shifter.disconnect();
+    }catch(e){}
+
+    try{
+      shifter.off();
+    }catch(e){}
+
+  }
+
+  activeShifters=[];
+
+  for(const timer of activeTimers){
+    clearTimeout(timer);
+  }
+
+  activeTimers=[];
+
+  playing=false;
+
+  document
+    .getElementById("playBtn")
+    .textContent="▶️ 재생";
 
 }
 
 
-/* =================================
-   타임라인
-================================= */
+/* =========================================
+   재생
+========================================= */
 
-function updateTimeline(){
+document
+.getElementById("playBtn")
+.addEventListener("click",play);
 
-  const timeline=
-    document.getElementById(
-      "timeline"
+
+async function play(){
+
+  if(!tracks.length){
+
+    alert("먼저 음악을 추가해주세요.");
+
+    return;
+  }
+
+  try{
+
+    const PitchShifter =
+      await loadPitchEngine();
+
+    initAudio();
+
+    await audioContext.resume();
+
+    stopPlayback();
+
+    const master =
+      audioContext.createGain();
+
+    master.gain.value=1;
+
+    master.connect(
+      audioContext.destination
     );
 
+    let total=0;
 
-  timeline.innerHTML="";
+    for(const track of tracks){
+
+      if(track.muted){
+        continue;
+      }
+
+      const duration =
+        Math.max(
+          0,
+          track.trimEnd-track.trimStart
+        ) / track.speed;
+
+      if(duration<=0){
+        continue;
+      }
+
+      total=Math.max(total,duration);
 
 
-  const total=
-    getTotalDuration();
+      /*
+        SoundTouchJS PitchShifter
 
+        pitch:
+        1 = 원래 음정
+        2 = 한 옥타브 위
+        0.5 = 한 옥타브 아래
+      */
 
-  if(!total)
-    return;
-
-
-  tracks.forEach(
-    (track,index)=>{
-
-      const block=
-        document.createElement(
-          "div"
+      const pitchMultiplier =
+        Math.pow(
+          2,
+          track.pitch/12
         );
 
 
-      block.className=
-        "timelineBlock";
+      const shifter =
+        new PitchShifter(
+          audioContext,
+          track.buffer,
+          16384
+        );
 
 
-      const duration=
-        (
-          track.trimEnd-
-          track.trimStart
-        )/
+      shifter.tempo=
         track.speed;
 
-
-      block.style.left=
-        "1%";
-
-
-      block.style.width=
-        Math.max(
-          10,
-          duration/total*97
-        )+"%";
+      shifter.pitch=
+        pitchMultiplier;
 
 
-      block.style.top=
-        (10+index*20)+"px";
+      /*
+        trimStart 위치부터 시작
+      */
+
+      shifter.percentagePlayed =
+        track.trimStart /
+        track.buffer.duration;
 
 
-      block.textContent=
-        track.name;
-
-
-      timeline.appendChild(
-        block
+      connectEffects(
+        audioContext,
+        shifter,
+        track,
+        master
       );
 
+
+      activeShifters.push(shifter);
+
+
+      const timer =
+        setTimeout(()=>{
+
+          try{
+            shifter.disconnect();
+          }catch(e){}
+
+          try{
+            shifter.off();
+          }catch(e){}
+
+        },duration*1000+100);
+
+      activeTimers.push(timer);
+
     }
+
+
+    if(total<=0){
+
+      stopPlayback();
+
+      alert(
+        "재생할 수 있는 트랙이 없습니다."
+      );
+
+      return;
+    }
+
+
+    playing=true;
+
+    playStartedAt=
+      performance.now();
+
+    playTotalDuration=total;
+
+    document
+      .getElementById("playBtn")
+      .textContent="⏸ 재생 중";
+
+    setStatus(
+      "playStatus",
+      "재생 중..."
+    );
+
+
+    const endTimer =
+      setTimeout(()=>{
+
+        stopPlayback();
+
+        setStatus(
+          "playStatus",
+          "재생 완료"
+        );
+
+      },total*1000+300);
+
+    activeTimers.push(endTimer);
+
+    updateTimeLoop();
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+
+/* =========================================
+   시간 표시
+========================================= */
+
+function updateTimeLoop(){
+
+  if(!playing){
+
+    document.getElementById("timeDisplay")
+      .textContent=
+      "0.00 / "+
+      playTotalDuration.toFixed(2)+
+      "초";
+
+    return;
+  }
+
+  const elapsed =
+    Math.min(
+      (performance.now()-playStartedAt)/1000,
+      playTotalDuration
+    );
+
+  document.getElementById("timeDisplay")
+    .textContent=
+    elapsed.toFixed(2)+
+    " / "+
+    playTotalDuration.toFixed(2)+
+    "초";
+
+  requestAnimationFrame(
+    updateTimeLoop
   );
 
 }
 
 
-/* =================================
+/* =========================================
+   정지 버튼
+========================================= */
+
+document
+.getElementById("stopBtn")
+.addEventListener("click",function(){
+
+  stopPlayback();
+
+  setStatus(
+    "playStatus",
+    "정지됨"
+  );
+
+});
+
+
+/* =========================================
    WAV 저장
-================================= */
+========================================= */
 
 document
 .getElementById("exportBtn")
-.addEventListener(
-  "click",
-  exportWav
-);
+.addEventListener("click",exportWav);
 
 
 async function exportWav(){
 
-  if(tracks.length===0){
+  if(!tracks.length){
 
-    alert(
-      "저장할 음악이 없습니다."
-    );
+    alert("먼저 음악을 추가해주세요.");
 
     return;
-
   }
 
 
-  const button=
+  const PitchShifter =
+    await loadPitchEngine();
+
+
+  const total =
+    getTotalDuration();
+
+
+  if(total<=0){
+
+    alert(
+      "저장할 수 있는 음악이 없습니다."
+    );
+
+    return;
+  }
+
+
+  const button =
     document.getElementById(
       "exportBtn"
     );
-
 
   button.disabled=true;
 
@@ -1888,135 +1502,338 @@ async function exportWav(){
     "⏳ WAV 만드는 중...";
 
 
+  let context=null;
+  let recorder=null;
+  let silentGain=null;
+
+  const leftChunks=[];
+  const rightChunks=[];
+
+
   try{
 
-    const sampleRate=44100;
+    /*
+      OfflineAudioContext 대신
+      일반 AudioContext를 사용한다.
 
-    const total=
-      getTotalDuration();
+      SoundTouchJS의 PitchShifter를
+      실시간으로 처리한 뒤 PCM을 녹음한다.
+    */
+
+    context =
+      new (
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
 
 
-    const offline=
-      new OfflineAudioContext(
+    await context.resume();
+
+
+    const master =
+      context.createGain();
+
+    master.gain.value=1;
+
+
+    /*
+      PCM 녹음용 ScriptProcessor
+    */
+
+    recorder =
+      context.createScriptProcessor(
+        4096,
         2,
-        Math.ceil(
-          total*sampleRate
+        2
+      );
+
+
+    recorder.onaudioprocess =
+      function(event){
+
+        const input =
+          event.inputBuffer;
+
+        const left =
+          new Float32Array(
+            input.getChannelData(0)
+          );
+
+        let right;
+
+        if(input.numberOfChannels>1){
+
+          right =
+            new Float32Array(
+              input.getChannelData(1)
+            );
+
+        }else{
+
+          right =
+            new Float32Array(left);
+
+        }
+
+        leftChunks.push(left);
+        rightChunks.push(right);
+
+      };
+
+
+    /*
+      녹음기는 반드시 출력에 연결되어야
+      브라우저가 오디오 처리를 계속한다.
+
+      하지만 소리는 실제로 나오지 않도록
+      0 볼륨으로 만든다.
+    */
+
+    silentGain =
+      context.createGain();
+
+    silentGain.gain.value=0;
+
+
+    master.connect(recorder);
+
+    recorder.connect(silentGain);
+
+    silentGain.connect(
+      context.destination
+    );
+
+
+    const shifters=[];
+
+
+    for(const track of tracks){
+
+      const duration =
+        Math.max(
+          0,
+          track.trimEnd-track.trimStart
+        ) / track.speed;
+
+
+      if(duration<=0){
+        continue;
+      }
+
+
+      const shifter =
+        new PitchShifter(
+          context,
+          track.buffer,
+          16384
+        );
+
+
+      shifter.tempo=
+        track.speed;
+
+
+      shifter.pitch=
+        Math.pow(
+          2,
+          track.pitch/12
+        );
+
+
+      shifter.percentagePlayed =
+        track.trimStart /
+        track.buffer.duration;
+
+
+      connectEffects(
+        context,
+        shifter,
+        track,
+        master
+      );
+
+
+      shifters.push({
+        shifter:shifter,
+        duration:duration
+      });
+
+    }
+
+
+    /*
+      음악 길이만큼 처리
+    */
+
+    const startTime =
+      performance.now();
+
+
+    await new Promise(resolve=>{
+
+      const timer =
+        setInterval(()=>{
+
+          const elapsed =
+            (performance.now()-startTime)/1000;
+
+          const percent =
+            Math.min(
+              100,
+              Math.round(
+                elapsed/total*100
+              )
+            );
+
+          button.textContent=
+            "⏳ WAV 만드는 중 "+
+            percent+
+            "%";
+
+
+          if(elapsed>=total+0.5){
+
+            clearInterval(timer);
+
+            resolve();
+
+          }
+
+        },100);
+
+    });
+
+
+    /*
+      모든 SoundTouch 노드 정리
+    */
+
+    for(const item of shifters){
+
+      try{
+        item.shifter.disconnect();
+      }catch(e){}
+
+      try{
+        item.shifter.off();
+      }catch(e){}
+
+    }
+
+
+    recorder.onaudioprocess=null;
+
+    try{
+      recorder.disconnect();
+    }catch(e){}
+
+    try{
+      silentGain.disconnect();
+    }catch(e){}
+
+
+    /*
+      필요한 길이까지만 잘라서 WAV 생성
+    */
+
+    const sampleRate =
+      context.sampleRate;
+
+    const wantedFrames =
+      Math.ceil(
+        total*sampleRate
+      );
+
+
+    let available=0;
+
+    for(const chunk of leftChunks){
+      available+=chunk.length;
+    }
+
+
+    const frameCount =
+      Math.min(
+        wantedFrames,
+        available
+      );
+
+
+    const left =
+      new Float32Array(frameCount);
+
+    const right =
+      new Float32Array(frameCount);
+
+
+    let offset=0;
+
+
+    for(let i=0;i<leftChunks.length;i++){
+
+      if(offset>=frameCount){
+        break;
+      }
+
+      const remaining =
+        frameCount-offset;
+
+      const count =
+        Math.min(
+          remaining,
+          leftChunks[i].length
+        );
+
+
+      left.set(
+        leftChunks[i].subarray(
+          0,
+          count
         ),
+        offset
+      );
+
+
+      right.set(
+        rightChunks[i].subarray(
+          0,
+          count
+        ),
+        offset
+      );
+
+
+      offset+=count;
+
+    }
+
+
+    const wav =
+      createWav(
+        left,
+        right,
         sampleRate
       );
 
 
-    const destination=
-      offline.createGain();
-
-
-    destination.connect(
-      offline.destination
-    );
-
-
-    tracks.forEach(
-      track=>{
-
-        const source=
-          offline
-          .createBufferSource();
-
-
-        source.buffer=
-          track.buffer;
-
-
-        source.playbackRate.value=
-          track.speed;
-
-
-        const gain=
-          offline.createGain();
-
-
-        gain.gain.value=
-          track.muted
-          ? 0
-          : track.volume;
-
-
-        const bass=
-          offline
-          .createBiquadFilter();
-
-
-        bass.type="lowshelf";
-
-        bass.frequency.value=180;
-
-        bass.gain.value=
-          track.bass;
-
-
-        const treble=
-          offline
-          .createBiquadFilter();
-
-
-        treble.type="highshelf";
-
-        treble.frequency.value=3000;
-
-        treble.gain.value=
-          track.treble;
-
-
-        source.connect(gain);
-
-        gain.connect(bass);
-
-        bass.connect(treble);
-
-        treble.connect(
-          destination
-        );
-
-
-        source.start(
-          0,
-          track.trimStart,
-          track.trimEnd-
-          track.trimStart
-        );
-
-      }
-    );
-
-
-    const rendered=
-      await offline.startRendering();
-
-
-    const wav=
-      bufferToWav(rendered);
-
-
-    const blob=
+    const blob =
       new Blob(
         [wav],
         {type:"audio/wav"}
       );
 
 
-    const url=
+    const url =
       URL.createObjectURL(blob);
 
 
-    const a=
+    const a =
       document.createElement("a");
-
 
     a.href=url;
 
     a.download=
-      "Pocket-Music-Edited.wav";
-
+      "pocket_music_edit.wav";
 
     document.body.appendChild(a);
 
@@ -2024,12 +1841,15 @@ async function exportWav(){
 
     a.remove();
 
-
     setTimeout(
-      ()=>{
-        URL.revokeObjectURL(url);
-      },
-      1000
+      ()=>URL.revokeObjectURL(url),
+      3000
+    );
+
+
+    setStatus(
+      "playStatus",
+      "✅ WAV 저장 완료!"
     );
 
 
@@ -2038,78 +1858,96 @@ async function exportWav(){
     console.error(error);
 
     alert(
-      "WAV 저장 중 오류가 발생했습니다."
+      "WAV 저장 중 오류가 발생했습니다.\n"+
+      error.message
     );
 
+
+  }finally{
+
+    try{
+
+      if(context){
+        await context.close();
+      }
+
+    }catch(e){}
+
+
+    button.disabled=false;
+
+    button.textContent=
+      "💾 WAV로 저장하기";
+
   }
-
-
-  button.disabled=false;
-
-  button.textContent=
-    "💾 WAV 파일로 저장";
 
 }
 
 
-/* =================================
-   WAV 변환
-================================= */
+/* =========================================
+   WAV 생성
+========================================= */
 
-function bufferToWav(buffer){
+function createWav(
+  left,
+  right,
+  sampleRate
+){
 
-  const channels=
-    buffer.numberOfChannels;
+  const channels=2;
 
-  const sampleRate=
-    buffer.sampleRate;
+  const bitsPerSample=16;
 
-  const length=
-    buffer.length*
+  const blockAlign =
     channels*
-    2;
+    bitsPerSample/8;
 
+  const byteRate =
+    sampleRate*
+    blockAlign;
 
-  const arrayBuffer=
+  const dataSize =
+    left.length*
+    blockAlign;
+
+  const buffer =
     new ArrayBuffer(
-      44+length
+      44+dataSize
     );
 
-
-  const view=
-    new DataView(
-      arrayBuffer
-    );
+  const view =
+    new DataView(buffer);
 
 
   writeString(
-    view,0,"RIFF"
+    view,
+    0,
+    "RIFF"
   );
-
 
   view.setUint32(
     4,
-    36+length,
+    36+dataSize,
     true
   );
 
-
   writeString(
-    view,8,"WAVE"
+    view,
+    8,
+    "WAVE"
   );
 
-
   writeString(
-    view,12,"fmt "
+    view,
+    12,
+    "fmt "
   );
-
 
   view.setUint32(
     16,
     16,
     true
   );
-
 
   view.setUint16(
     20,
@@ -2117,13 +1955,11 @@ function bufferToWav(buffer){
     true
   );
 
-
   view.setUint16(
     22,
     channels,
     true
   );
-
 
   view.setUint32(
     24,
@@ -2131,56 +1967,35 @@ function bufferToWav(buffer){
     true
   );
 
-
   view.setUint32(
     28,
-    sampleRate*
-    channels*
-    2,
+    byteRate,
     true
   );
-
 
   view.setUint16(
     32,
-    channels*2,
+    blockAlign,
     true
   );
-
 
   view.setUint16(
     34,
-    16,
+    bitsPerSample,
     true
   );
 
-
   writeString(
-    view,36,"data"
+    view,
+    36,
+    "data"
   );
-
 
   view.setUint32(
     40,
-    length,
+    dataSize,
     true
   );
-
-
-  const data=[];
-
-
-  for(
-    let c=0;
-    c<channels;
-    c++
-  ){
-
-    data.push(
-      buffer.getChannelData(c)
-    );
-
-  }
 
 
   let offset=44;
@@ -2188,51 +2003,55 @@ function bufferToWav(buffer){
 
   for(
     let i=0;
-    i<buffer.length;
+    i<left.length;
     i++
   ){
 
-    for(
-      let c=0;
-      c<channels;
-      c++
-    ){
-
-      let sample=
-        data[c][i];
-
-
-      sample=
-        Math.max(
-          -1,
-          Math.min(
-            1,
-            sample
-          )
-        );
-
-
-      const value=
-        sample<0
-        ? sample*0x8000
-        : sample*0x7fff;
-
-
-      view.setInt16(
-        offset,
-        value,
-        true
+    let l=
+      Math.max(
+        -1,
+        Math.min(
+          1,
+          left[i]
+        )
       );
 
 
-      offset+=2;
+    let r=
+      Math.max(
+        -1,
+        Math.min(
+          1,
+          right[i]
+        )
+      );
 
-    }
+
+    view.setInt16(
+      offset,
+      l<0
+        ? l*0x8000
+        : l*0x7fff,
+      true
+    );
+
+    offset+=2;
+
+
+    view.setInt16(
+      offset,
+      r<0
+        ? r*0x8000
+        : r*0x7fff,
+      true
+    );
+
+    offset+=2;
 
   }
 
 
-  return arrayBuffer;
+  return buffer;
 
 }
 
@@ -2259,56 +2078,32 @@ function writeString(
 }
 
 
-/* =================================
-   시간
-================================= */
+/* =========================================
+   상태 메시지
+========================================= */
 
-function formatTime(seconds){
+function setStatus(
+  id,
+  text
+){
 
-  seconds=
-    Math.max(
-      0,
-      Math.floor(seconds)
-    );
+  const element =
+    document.getElementById(id);
 
-
-  const min=
-    Math.floor(
-      seconds/60
-    );
-
-
-  const sec=
-    seconds%60;
-
-
-  return(
-    String(min)
-    .padStart(2,"0")+
-    ":"+
-    String(sec)
-    .padStart(2,"0")
-  );
+  if(element){
+    element.textContent=text;
+  }
 
 }
 
 
-/* =================================
-   HTML 안전 처리
-================================= */
+/* =========================================
+   초기 화면
+========================================= */
 
-function escapeHTML(text){
-
-  return text
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
+renderTracks();
 
 </script>
 
 </body>
-      </html>
+  </html>
