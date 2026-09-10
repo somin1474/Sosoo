@@ -78,6 +78,11 @@ button:hover{
   opacity:.9;
 }
 
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
 button.danger{
   background:#d9536f;
 }
@@ -101,10 +106,30 @@ button.gray{
 
 .track-name{
   font-weight:bold;
-  margin-bottom:8px;
+  margin-bottom:5px;
   overflow:hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
+}
+
+.track-info{
+  font-size:12px;
+  color:#777;
+  margin-bottom:8px;
+}
+
+.timeline{
+  height:9px;
+  background:#e8e3f7;
+  border-radius:20px;
+  overflow:hidden;
+  margin:8px 0;
+}
+
+.timeline-bar{
+  height:100%;
+  background:#7655c8;
+  border-radius:20px;
 }
 
 canvas{
@@ -134,6 +159,26 @@ input[type=range]{
   color:#7655c8;
 }
 
+.number-row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.number-row input{
+  flex:1;
+  width:100%;
+  padding:9px;
+  border:1px solid #d8cef3;
+  border-radius:8px;
+  font-size:15px;
+}
+
+.number-row span{
+  color:#777;
+  font-size:13px;
+}
+
 .row{
   display:flex;
   flex-wrap:wrap;
@@ -160,11 +205,6 @@ input[type=range]{
   margin-top:10px;
 }
 
-.warning{
-  background:#fff4df;
-  color:#805900;
-}
-
 .pitch-info{
   text-align:center;
   font-size:20px;
@@ -181,7 +221,15 @@ input[type=range]{
 #timeDisplay{
   text-align:center;
   font-weight:bold;
-  margin:8px;
+  font-size:18px;
+  margin:10px;
+}
+
+#projectDuration{
+  text-align:center;
+  color:#777;
+  font-size:13px;
+  margin-bottom:10px;
 }
 
 footer{
@@ -240,10 +288,28 @@ footer{
 
       <!-- 시작 위치 -->
       <div class="control">
+
         <label>
-          <span>⏱️ 시작 위치</span>
-          <span id="startPositionValue" class="value">0.00초</span>
+          <span>📍 시작 위치</span>
+          <span id="startPositionValue" class="value">
+            0.00초
+          </span>
         </label>
+
+        <div class="number-row">
+
+          <input
+            id="startPositionNumber"
+            type="number"
+            min="0"
+            max="600"
+            step="0.01"
+            value="0"
+          >
+
+          <span>초</span>
+
+        </div>
 
         <input
           id="startPosition"
@@ -255,14 +321,20 @@ footer{
         >
 
         <div class="small">
-          이 트랙이 전체 음악의 몇 초부터 시작할지 정합니다.
+          예: 5초로 설정하면 이 음악은 전체 프로젝트의 5초 지점에서 시작합니다.
         </div>
+
       </div>
 
+
+      <!-- 볼륨 -->
       <div class="control">
+
         <label>
           <span>🔊 볼륨</span>
-          <span id="volumeValue" class="value">100%</span>
+          <span id="volumeValue" class="value">
+            100%
+          </span>
         </label>
 
         <input
@@ -273,12 +345,18 @@ footer{
           step="0.01"
           value="1"
         >
+
       </div>
 
+
+      <!-- Pitch -->
       <div class="control">
+
         <label>
           <span>🎵 음정(Pitch)</span>
-          <span id="pitchValue" class="value">0</span>
+          <span id="pitchValue" class="value">
+            0
+          </span>
         </label>
 
         <input
@@ -298,12 +376,18 @@ footer{
           +1 = 반음 높게 / -1 = 반음 낮게<br>
           +12 = 한 옥타브 높게 / -12 = 한 옥타브 낮게
         </div>
+
       </div>
 
+
+      <!-- Speed -->
       <div class="control">
+
         <label>
           <span>⏩ 속도</span>
-          <span id="speedValue" class="value">1.00x</span>
+          <span id="speedValue" class="value">
+            1.00x
+          </span>
         </label>
 
         <input
@@ -314,12 +398,18 @@ footer{
           step="0.01"
           value="1"
         >
+
       </div>
 
+
+      <!-- Trim Start -->
       <div class="control">
+
         <label>
           <span>✂️ 시작</span>
-          <span id="trimStartValue" class="value">0.00초</span>
+          <span id="trimStartValue" class="value">
+            0.00초
+          </span>
         </label>
 
         <input
@@ -330,12 +420,18 @@ footer{
           step="0.01"
           value="0"
         >
+
       </div>
 
+
+      <!-- Trim End -->
       <div class="control">
+
         <label>
           <span>✂️ 끝</span>
-          <span id="trimEndValue" class="value">0.00초</span>
+          <span id="trimEndValue" class="value">
+            0.00초
+          </span>
         </label>
 
         <input
@@ -346,12 +442,18 @@ footer{
           step="0.01"
           value="1"
         >
+
       </div>
 
+
+      <!-- Bass -->
       <div class="control">
+
         <label>
           <span>🔊 저음(Bass)</span>
-          <span id="bassValue" class="value">0 dB</span>
+          <span id="bassValue" class="value">
+            0 dB
+          </span>
         </label>
 
         <input
@@ -362,12 +464,18 @@ footer{
           step="1"
           value="0"
         >
+
       </div>
 
+
+      <!-- Treble -->
       <div class="control">
+
         <label>
           <span>🔊 고음(Treble)</span>
-          <span id="trebleValue" class="value">0 dB</span>
+          <span id="trebleValue" class="value">
+            0 dB
+          </span>
         </label>
 
         <input
@@ -378,12 +486,18 @@ footer{
           step="1"
           value="0"
         >
+
       </div>
 
+
+      <!-- Echo -->
       <div class="control">
+
         <label>
           <span>🌊 Echo</span>
-          <span id="echoValue" class="value">0%</span>
+          <span id="echoValue" class="value">
+            0%
+          </span>
         </label>
 
         <input
@@ -394,45 +508,82 @@ footer{
           step="1"
           value="0"
         >
+
       </div>
 
+
       <div class="row">
-        <button id="muteBtn">🔇 음소거</button>
-        <button id="resetBtn" class="gray">↩️ 초기화</button>
-        <button id="deleteBtn" class="danger">🗑️ 삭제</button>
+
+        <button id="muteBtn">
+          🔇 음소거
+        </button>
+
+        <button id="resetBtn" class="gray">
+          ↩️ 초기화
+        </button>
+
+        <button id="deleteBtn" class="danger">
+          🗑️ 삭제
+        </button>
+
       </div>
 
     </div>
   </div>
 
+
+  <!-- 재생 -->
   <div class="card">
+
     <h2>▶️ 재생</h2>
 
     <div id="timeDisplay">
       0.00 / 0.00초
     </div>
 
+    <div id="projectDuration">
+      프로젝트 길이: 0.00초
+    </div>
+
     <div class="row">
-      <button id="playBtn">▶️ 재생</button>
-      <button id="stopBtn" class="gray">⏹ 정지</button>
+
+      <button id="playBtn">
+        ▶️ 재생
+      </button>
+
+      <button id="stopBtn" class="gray">
+        ⏹ 정지
+      </button>
+
     </div>
 
     <div id="playStatus" class="status">
       준비됨
     </div>
+
   </div>
 
+
+  <!-- 저장 -->
   <div class="card">
+
     <h2>💾 저장</h2>
 
-    <button id="exportBtn" style="width:100%">
+    <button
+      id="exportBtn"
+      style="width:100%"
+    >
       💾 WAV로 저장하기
     </button>
 
-    <div class="small" style="margin-top:10px">
-      음정 변경과 트랙 시작 위치는 저장된 WAV에도 적용됩니다.<br>
-      음정 처리를 위해 저장 과정은 음악 길이와 비슷한 시간이 걸릴 수 있습니다.
+    <div
+      class="small"
+      style="margin-top:10px"
+    >
+      시작 위치, 음정, 속도, 자르기 및 효과가 저장된 WAV에 적용됩니다.<br>
+      저장 과정은 음악 길이와 비슷한 시간이 걸릴 수 있습니다.
     </div>
+
   </div>
 
 </div>
@@ -441,25 +592,26 @@ footer{
   Pocket Music Editor
 </footer>
 
+
 <script>
 
-let audioContext = null;
+let audioContext=null;
 
-let tracks = [];
+let tracks=[];
 
-let selectedIndex = -1;
+let selectedIndex=-1;
 
-let activeShifters = [];
+let activeShifters=[];
 
-let activeTimers = [];
+let activeTimers=[];
 
-let playing = false;
+let playing=false;
 
-let playStartedAt = 0;
+let playStartedAt=0;
 
-let playTotalDuration = 0;
+let playTotalDuration=0;
 
-let PitchShifterClass = null;
+let PitchShifterClass=null;
 
 
 /* =========================================
@@ -474,11 +626,11 @@ async function loadPitchEngine(){
 
   try{
 
-    const module = await import(
+    const module=await import(
       "https://cdn.jsdelivr.net/npm/soundtouchjs@0.3.0/dist/soundtouch.js"
     );
 
-    PitchShifterClass = module.PitchShifter;
+    PitchShifterClass=module.PitchShifter;
 
     if(!PitchShifterClass){
       throw new Error(
@@ -510,12 +662,30 @@ function initAudio(){
 
   if(!audioContext){
 
-    audioContext = new(
+    audioContext=new(
       window.AudioContext ||
       window.webkitAudioContext
     )();
 
   }
+
+}
+
+
+/* =========================================
+   숫자 표시
+========================================= */
+
+function formatTime(seconds){
+
+  if(!isFinite(seconds)){
+    return "0.00";
+  }
+
+  return Math.max(
+    0,
+    seconds
+  ).toFixed(2);
 
 }
 
@@ -534,7 +704,7 @@ document
 
 async function handleFiles(event){
 
-  const files =
+  const files=
     Array.from(event.target.files);
 
   if(!files.length){
@@ -545,17 +715,20 @@ async function handleFiles(event){
 
   setStatus(
     "status",
-    "음악 파일을 불러오는 중..."
+    files.length+
+    "개의 음악을 불러오는 중..."
   );
+
+  let added=0;
 
   for(const file of files){
 
     try{
 
-      const arrayBuffer =
+      const arrayBuffer=
         await file.arrayBuffer();
 
-      const buffer =
+      const buffer=
         await audioContext.decodeAudioData(
           arrayBuffer
         );
@@ -566,7 +739,6 @@ async function handleFiles(event){
 
         buffer:buffer,
 
-        /* 새 기능 */
         startPosition:0,
 
         volume:1,
@@ -589,6 +761,8 @@ async function handleFiles(event){
 
       });
 
+      added++;
+
     }catch(error){
 
       console.error(error);
@@ -602,22 +776,33 @@ async function handleFiles(event){
 
   }
 
-  renderTracks();
 
   if(
     selectedIndex===-1 &&
-    tracks.length
+    tracks.length>0
   ){
 
-    selectTrack(0);
+    selectedIndex=0;
 
   }
 
+
+  renderTracks();
+
+  if(selectedIndex>=0){
+    selectTrack(selectedIndex);
+  }
+
+
+  updateProjectDuration();
+
+
   setStatus(
     "status",
-    tracks.length+
+    added+
     "개의 음악이 추가되었습니다."
   );
+
 
   event.target.value="";
 
@@ -630,12 +815,13 @@ async function handleFiles(event){
 
 function renderTracks(){
 
-  const list =
+  const list=
     document.getElementById(
       "trackList"
     );
 
   list.innerHTML="";
+
 
   if(!tracks.length){
 
@@ -644,14 +830,23 @@ function renderTracks(){
       '아직 음악이 없습니다.'+
       '</div>';
 
+    updateProjectDuration();
+
     return;
   }
+
+
+  const total=
+    getTotalDuration();
+
 
   tracks.forEach(
     (track,index)=>{
 
-      const div =
-        document.createElement("div");
+      const div=
+        document.createElement(
+          "div"
+        );
 
       div.className=
         "track"+
@@ -661,20 +856,8 @@ function renderTracks(){
             : ""
         );
 
-      const canvas =
-        document.createElement(
-          "canvas"
-        );
 
-      canvas.width=800;
-      canvas.height=90;
-
-      drawWave(
-        canvas,
-        track.buffer
-      );
-
-      const name =
+      const name=
         document.createElement(
           "div"
         );
@@ -687,24 +870,135 @@ function renderTracks(){
             ? "🔇 "
             : "🎵 "
         )+
-        track.name+
-        "  | 시작 "+
-        track.startPosition.toFixed(2)+
+        track.name;
+
+
+      const originalDuration=
+        track.buffer.duration;
+
+
+      const processedDuration=
+        getTrackDuration(track);
+
+
+      const endTime=
+        track.startPosition+
+        processedDuration;
+
+
+      const info=
+        document.createElement(
+          "div"
+        );
+
+      info.className="track-info";
+
+      info.textContent=
+        "원본 "+
+        formatTime(originalDuration)+
+        "초  |  "+
+        "재생 "+
+        formatTime(processedDuration)+
+        "초  |  "+
+        "시작 "+
+        formatTime(track.startPosition)+
+        "초  |  끝 "+
+        formatTime(endTime)+
         "초";
+
+
+      /*
+        전체 프로젝트 안에서
+        이 트랙이 차지하는 위치를
+        간단하게 표시
+      */
+
+      const timeline=
+        document.createElement(
+          "div"
+        );
+
+      timeline.className="timeline";
+
+
+      const timelineBar=
+        document.createElement(
+          "div"
+        );
+
+      timelineBar.className=
+        "timeline-bar";
+
+
+      if(total>0){
+
+        timelineBar.style.marginLeft=
+          (
+            track.startPosition/
+            total*
+            100
+          )+
+          "%";
+
+
+        timelineBar.style.width=
+          Math.min(
+            100,
+            processedDuration/
+            total*
+            100
+          )+
+          "%";
+
+      }else{
+
+        timelineBar.style.width="0%";
+
+      }
+
+
+      timeline.appendChild(
+        timelineBar
+      );
+
+
+      const canvas=
+        document.createElement(
+          "canvas"
+        );
+
+      canvas.width=800;
+
+      canvas.height=90;
+
+      drawWave(
+        canvas,
+        track.buffer
+      );
+
 
       div.appendChild(name);
 
+      div.appendChild(info);
+
+      div.appendChild(timeline);
+
       div.appendChild(canvas);
+
 
       div.addEventListener(
         "click",
         ()=>selectTrack(index)
       );
 
+
       list.appendChild(div);
 
     }
   );
+
+
+  updateProjectDuration();
 
 }
 
@@ -718,11 +1012,12 @@ function drawWave(
   buffer
 ){
 
-  const ctx =
+  const ctx=
     canvas.getContext("2d");
 
-  const data =
+  const data=
     buffer.getChannelData(0);
+
 
   ctx.clearRect(
     0,
@@ -730,6 +1025,7 @@ function drawWave(
     canvas.width,
     canvas.height
   );
+
 
   ctx.fillStyle="#201a30";
 
@@ -740,15 +1036,21 @@ function drawWave(
     canvas.height
   );
 
+
   ctx.strokeStyle="#9b83df";
 
   ctx.beginPath();
 
-  const step =
-    Math.ceil(
-      data.length/
-      canvas.width
+
+  const step=
+    Math.max(
+      1,
+      Math.ceil(
+        data.length/
+        canvas.width
+      )
     );
+
 
   for(
     let x=0;
@@ -761,6 +1063,7 @@ function drawWave(
     let max=-1;
 
     const start=x*step;
+
 
     for(
       let i=start;
@@ -781,19 +1084,31 @@ function drawWave(
 
     }
 
+
     const y1=
       (1-min)*
-      canvas.height/2;
+      canvas.height/
+      2;
+
 
     const y2=
       (1-max)*
-      canvas.height/2;
+      canvas.height/
+      2;
 
-    ctx.moveTo(x,y1);
 
-    ctx.lineTo(x,y2);
+    ctx.moveTo(
+      x,
+      y1
+    );
+
+    ctx.lineTo(
+      x,
+      y2
+    );
 
   }
+
 
   ctx.stroke();
 
@@ -813,10 +1128,13 @@ function selectTrack(index){
     return;
   }
 
+
   selectedIndex=index;
+
 
   const track=
     tracks[index];
+
 
   document
     .getElementById(
@@ -824,25 +1142,48 @@ function selectTrack(index){
     )
     .style.display="none";
 
+
   document
     .getElementById(
       "editor"
     )
     .style.display="block";
 
+
   document
     .getElementById(
       "selectedName"
     )
-    .textContent=track.name;
+    .textContent=
+      track.name+
+      " ("+
+      formatTime(track.buffer.duration)+
+      "초)";
 
+
+  /*
+    시작 위치
+  */
 
   document
     .getElementById(
       "startPosition"
     )
-    .value=track.startPosition;
+    .value=
+      track.startPosition;
 
+
+  document
+    .getElementById(
+      "startPositionNumber"
+    )
+    .value=
+      track.startPosition;
+
+
+  /*
+    Trim
+  */
 
   const trimStart=
     document.getElementById(
@@ -854,11 +1195,13 @@ function selectTrack(index){
       "trimEnd"
     );
 
+
   trimStart.max=
     track.buffer.duration;
 
   trimEnd.max=
     track.buffer.duration;
+
 
   trimStart.value=
     track.trimStart;
@@ -867,25 +1210,34 @@ function selectTrack(index){
     track.trimEnd;
 
 
+  /*
+    기타 설정
+  */
+
   document.getElementById(
     "volume"
   ).value=track.volume;
+
 
   document.getElementById(
     "pitch"
   ).value=track.pitch;
 
+
   document.getElementById(
     "speed"
   ).value=track.speed;
+
 
   document.getElementById(
     "bass"
   ).value=track.bass;
 
+
   document.getElementById(
     "treble"
   ).value=track.treble;
+
 
   document.getElementById(
     "echo"
@@ -900,7 +1252,7 @@ function selectTrack(index){
 
 
 /* =========================================
-   선택된 트랙
+   선택 트랙
 ========================================= */
 
 function getSelected(){
@@ -922,7 +1274,40 @@ function getSelected(){
 
 
 /* =========================================
-   시작 위치
+   트랙 실제 재생 길이
+========================================= */
+
+function getTrackDuration(track){
+
+  if(!track){
+    return 0;
+  }
+
+
+  const sourceLength=
+    Math.max(
+      0,
+      track.trimEnd-
+      track.trimStart
+    );
+
+
+  if(sourceLength<=0){
+    return 0;
+  }
+
+
+  return sourceLength/
+    Math.max(
+      0.01,
+      track.speed
+    );
+
+}
+
+
+/* =========================================
+   시작 위치 슬라이더
 ========================================= */
 
 document
@@ -938,8 +1323,96 @@ document
 
     if(!track)return;
 
-    track.startPosition=
-      parseFloat(this.value);
+
+    let value=
+      parseFloat(
+        this.value
+      );
+
+
+    if(!isFinite(value)){
+      value=0;
+    }
+
+
+    value=
+      Math.max(
+        0,
+        Math.min(
+          600,
+          value
+        )
+      );
+
+
+    track.startPosition=value;
+
+
+    document
+      .getElementById(
+        "startPositionNumber"
+      )
+      .value=
+        value;
+
+
+    updateLabels();
+
+    renderTracks();
+
+  }
+);
+
+
+/* =========================================
+   시작 위치 숫자
+========================================= */
+
+document
+.getElementById(
+  "startPositionNumber"
+)
+.addEventListener(
+  "input",
+  function(){
+
+    const track=
+      getSelected();
+
+    if(!track)return;
+
+
+    let value=
+      parseFloat(
+        this.value
+      );
+
+
+    if(!isFinite(value)){
+      return;
+    }
+
+
+    value=
+      Math.max(
+        0,
+        Math.min(
+          600,
+          value
+        )
+      );
+
+
+    track.startPosition=value;
+
+
+    document
+      .getElementById(
+        "startPosition"
+      )
+      .value=
+        value;
+
 
     updateLabels();
 
@@ -966,8 +1439,12 @@ document
 
     if(!track)return;
 
+
     track.volume=
-      parseFloat(this.value);
+      parseFloat(
+        this.value
+      );
+
 
     updateLabels();
 
@@ -992,8 +1469,12 @@ document
 
     if(!track)return;
 
+
     track.pitch=
-      parseInt(this.value);
+      parseInt(
+        this.value
+      );
+
 
     updateLabels();
 
@@ -1018,10 +1499,16 @@ document
 
     if(!track)return;
 
+
     track.speed=
-      parseFloat(this.value);
+      parseFloat(
+        this.value
+      );
+
 
     updateLabels();
+
+    renderTracks();
 
   }
 );
@@ -1044,25 +1531,34 @@ document
 
     if(!track)return;
 
+
     let value=
-      parseFloat(this.value);
+      parseFloat(
+        this.value
+      );
+
 
     if(
       value>=track.trimEnd
     ){
 
-      value=Math.max(
-        0,
-        track.trimEnd-0.01
-      );
+      value=
+        Math.max(
+          0,
+          track.trimEnd-0.01
+        );
 
       this.value=value;
 
     }
 
+
     track.trimStart=value;
 
+
     updateLabels();
+
+    renderTracks();
 
   }
 );
@@ -1085,25 +1581,34 @@ document
 
     if(!track)return;
 
+
     let value=
-      parseFloat(this.value);
+      parseFloat(
+        this.value
+      );
+
 
     if(
       value<=track.trimStart
     ){
 
-      value=Math.min(
-        track.buffer.duration,
-        track.trimStart+0.01
-      );
+      value=
+        Math.min(
+          track.buffer.duration,
+          track.trimStart+0.01
+        );
 
       this.value=value;
 
     }
 
+
     track.trimEnd=value;
 
+
     updateLabels();
+
+    renderTracks();
 
   }
 );
@@ -1126,8 +1631,12 @@ document
 
     if(!track)return;
 
+
     track.bass=
-      parseFloat(this.value);
+      parseFloat(
+        this.value
+      );
+
 
     updateLabels();
 
@@ -1152,8 +1661,12 @@ document
 
     if(!track)return;
 
+
     track.treble=
-      parseFloat(this.value);
+      parseFloat(
+        this.value
+      );
+
 
     updateLabels();
 
@@ -1178,8 +1691,12 @@ document
 
     if(!track)return;
 
+
     track.echo=
-      parseFloat(this.value);
+      parseFloat(
+        this.value
+      );
+
 
     updateLabels();
 
@@ -1204,8 +1721,18 @@ function updateLabels(){
       "startPositionValue"
     )
     .textContent=
-      track.startPosition.toFixed(2)+
+      formatTime(
+        track.startPosition
+      )+
       "초";
+
+
+  document
+    .getElementById(
+      "startPositionNumber"
+    )
+    .value=
+      track.startPosition;
 
 
   document
@@ -1221,8 +1748,11 @@ function updateLabels(){
 
   const pitchText=
     track.pitch>0
-      ? "+"+track.pitch
-      : String(track.pitch);
+      ? "+"+
+        track.pitch
+      : String(
+          track.pitch
+        );
 
 
   document
@@ -1256,7 +1786,9 @@ function updateLabels(){
       "trimStartValue"
     )
     .textContent=
-      track.trimStart.toFixed(2)+
+      formatTime(
+        track.trimStart
+      )+
       "초";
 
 
@@ -1265,7 +1797,9 @@ function updateLabels(){
       "trimEndValue"
     )
     .textContent=
-      track.trimEnd.toFixed(2)+
+      formatTime(
+        track.trimEnd
+      )+
       "초";
 
 
@@ -1305,6 +1839,9 @@ function updateLabels(){
         ? "🔊 음소거 해제"
         : "🔇 음소거";
 
+
+  updateProjectDuration();
+
 }
 
 
@@ -1325,8 +1862,10 @@ document
 
     if(!track)return;
 
+
     track.muted=
       !track.muted;
+
 
     updateLabels();
 
@@ -1353,6 +1892,7 @@ document
 
     if(!track)return;
 
+
     track.startPosition=0;
 
     track.volume=1;
@@ -1373,6 +1913,7 @@ document
     track.echo=0;
 
     track.muted=false;
+
 
     selectTrack(
       selectedIndex
@@ -1398,22 +1939,27 @@ document
       return;
     }
 
+
     stopPlayback();
+
 
     tracks.splice(
       selectedIndex,
       1
     );
 
+
     if(!tracks.length){
 
       selectedIndex=-1;
+
 
       document
         .getElementById(
           "noSelection"
         )
         .style.display="block";
+
 
       document
         .getElementById(
@@ -1429,11 +1975,13 @@ document
           tracks.length-1
         );
 
+
       selectTrack(
         selectedIndex
       );
 
     }
+
 
     renderTracks();
 
@@ -1455,6 +2003,7 @@ function connectEffects(
   const gain=
     context.createGain();
 
+
   gain.gain.value=
     track.muted
       ? 0
@@ -1463,6 +2012,7 @@ function connectEffects(
 
   const bass=
     context.createBiquadFilter();
+
 
   bass.type="lowshelf";
 
@@ -1474,6 +2024,7 @@ function connectEffects(
 
   const treble=
     context.createBiquadFilter();
+
 
   treble.type="highshelf";
 
@@ -1491,32 +2042,33 @@ function connectEffects(
 
 
   /*
-    시작 위치 기능
-
-    예:
-    startPosition = 10
-
-    → 이 트랙의 소리가
-      전체 음악의 10초에 시작
+    시작 위치용 Delay
   */
 
   let mainOutput=
     treble;
 
 
-  if(
-    track.startPosition>0
-  ){
+  if(track.startPosition>0){
 
     const startDelay=
       context.createDelay(600);
 
+
     startDelay.delayTime.value=
-      track.startPosition;
+      Math.min(
+        600,
+        Math.max(
+          0,
+          track.startPosition
+        )
+      );
+
 
     treble.connect(
       startDelay
     );
+
 
     mainOutput=
       startDelay;
@@ -1529,50 +2081,58 @@ function connectEffects(
   );
 
 
-  /* Echo */
+  /*
+    Echo
+  */
 
   if(track.echo>0){
 
-    const delay=
+    const echoDelay=
       context.createDelay(2);
 
-    delay.delayTime.value=.25;
+
+    echoDelay.delayTime.value=
+      0.25;
 
 
     const echoGain=
       context.createGain();
 
+
     echoGain.gain.value=
       track.echo/100;
 
 
-    /*
-      Echo도 시작 위치 뒤에
-      나오도록 연결
-    */
-
     treble.connect(
-      delay
+      echoDelay
     );
 
-    delay.connect(
+
+    echoDelay.connect(
       echoGain
     );
 
 
-    if(
-      track.startPosition>0
-    ){
+    if(track.startPosition>0){
 
       const echoStartDelay=
         context.createDelay(600);
 
+
       echoStartDelay.delayTime.value=
-        track.startPosition;
+        Math.min(
+          600,
+          Math.max(
+            0,
+            track.startPosition
+          )
+        );
+
 
       echoGain.connect(
         echoStartDelay
       );
+
 
       echoStartDelay.connect(
         destination
@@ -1592,15 +2152,17 @@ function connectEffects(
 
 
 /* =========================================
-   전체 길이
+   전체 프로젝트 길이
 ========================================= */
 
 function getTotalDuration(){
 
   let total=0;
 
+
   for(
-    const track of tracks
+    const track
+    of tracks
   ){
 
     if(track.muted){
@@ -1609,32 +2171,67 @@ function getTotalDuration(){
 
 
     const duration=
-      Math.max(
-        0,
-        track.trimEnd-
-        track.trimStart
-      )/
-      track.speed;
+      getTrackDuration(
+        track
+      );
 
 
-    /*
-      시작 위치 + 실제 재생 길이
-    */
+    if(duration<=0){
+      continue;
+    }
+
 
     const endTime=
       track.startPosition+
       duration;
 
 
-    if(endTime>total){
-
-      total=endTime;
-
-    }
+    total=
+      Math.max(
+        total,
+        endTime
+      );
 
   }
 
+
   return total;
+
+}
+
+
+/* =========================================
+   프로젝트 길이 표시
+========================================= */
+
+function updateProjectDuration(){
+
+  const total=
+    getTotalDuration();
+
+
+  document
+    .getElementById(
+      "projectDuration"
+    )
+    .textContent=
+      "프로젝트 길이: "+
+      formatTime(total)+
+      "초";
+
+
+  if(!playing){
+
+    document
+      .getElementById(
+        "timeDisplay"
+      )
+      .textContent=
+        "0.00 / "+
+        formatTime(total)+
+        "초";
+
+  }
 
 }
 
@@ -1654,11 +2251,13 @@ function stopPlayback(){
       shifter.disconnect();
     }catch(e){}
 
+
     try{
       shifter.off();
     }catch(e){}
 
   }
+
 
   activeShifters=[];
 
@@ -1672,7 +2271,9 @@ function stopPlayback(){
 
   }
 
+
   activeTimers=[];
+
 
   playing=false;
 
@@ -1683,6 +2284,22 @@ function stopPlayback(){
     )
     .textContent=
       "▶️ 재생";
+
+
+  /*
+    정지하면 시간은 0으로
+  */
+
+  document
+    .getElementById(
+      "timeDisplay"
+    )
+    .textContent=
+      "0.00 / "+
+      formatTime(
+        getTotalDuration()
+      )+
+      "초";
 
 }
 
@@ -1722,6 +2339,7 @@ async function play(){
 
     initAudio();
 
+
     await audioContext.resume();
 
 
@@ -1731,6 +2349,7 @@ async function play(){
     const master=
       audioContext.createGain();
 
+
     master.gain.value=1;
 
 
@@ -1739,7 +2358,8 @@ async function play(){
     );
 
 
-    let total=0;
+    let total=
+      getTotalDuration();
 
 
     for(
@@ -1753,34 +2373,15 @@ async function play(){
 
 
       const duration=
-        Math.max(
-          0,
-          track.trimEnd-
-          track.trimStart
-        )/
-        track.speed;
+        getTrackDuration(
+          track
+        );
 
 
       if(duration<=0){
         continue;
       }
 
-
-      const endTime=
-        track.startPosition+
-        duration;
-
-
-      total=
-        Math.max(
-          total,
-          endTime
-        );
-
-
-      /*
-        Pitch
-      */
 
       const pitchMultiplier=
         Math.pow(
@@ -1805,19 +2406,10 @@ async function play(){
         pitchMultiplier;
 
 
-      /*
-        원본 음악의
-        trimStart부터 시작
-      */
-
       shifter.percentagePlayed=
         track.trimStart/
         track.buffer.duration;
 
-
-      /*
-        효과와 시작 위치 적용
-      */
 
       connectEffects(
         audioContext,
@@ -1833,7 +2425,8 @@ async function play(){
 
 
       /*
-        실제 트랙이 끝나는 시간
+        트랙의 실제 끝나는 시간에
+        SoundTouch 처리를 중지
       */
 
       const timer=
@@ -1844,18 +2437,18 @@ async function play(){
               shifter.disconnect();
             }catch(e){}
 
+
             try{
               shifter.off();
             }catch(e){}
 
           },
-
           (
             track.startPosition+
-            duration
+            duration+
+            0.3
           )*
-          1000+
-          200
+          1000
         );
 
 
@@ -1881,8 +2474,10 @@ async function play(){
 
     playing=true;
 
+
     playStartedAt=
       performance.now();
+
 
     playTotalDuration=
       total;
@@ -1908,13 +2503,15 @@ async function play(){
 
           stopPlayback();
 
+
           setStatus(
             "playStatus",
             "재생 완료"
           );
 
         },
-        total*1000+400
+        total*1000+
+        500
       );
 
 
@@ -1930,6 +2527,11 @@ async function play(){
 
     console.error(error);
 
+    alert(
+      "재생 중 오류가 발생했습니다.\n"+
+      error.message
+    );
+
   }
 
 }
@@ -1942,15 +2544,6 @@ async function play(){
 function updateTimeLoop(){
 
   if(!playing){
-
-    document
-      .getElementById(
-        "timeDisplay"
-      )
-      .textContent=
-        "0.00 / "+
-        playTotalDuration.toFixed(2)+
-        "초";
 
     return;
 
@@ -1986,7 +2579,7 @@ function updateTimeLoop(){
 
 
 /* =========================================
-   정지
+   정지 버튼
 ========================================= */
 
 document
@@ -1998,6 +2591,7 @@ document
   function(){
 
     stopPlayback();
+
 
     setStatus(
       "playStatus",
@@ -2080,12 +2674,6 @@ async function exportWav(){
 
   try{
 
-    /*
-      실제 AudioContext에서
-      SoundTouchJS를 처리하고
-      결과를 PCM으로 녹음
-    */
-
     context=
       new(
         window.AudioContext ||
@@ -2098,6 +2686,7 @@ async function exportWav(){
 
     const master=
       context.createGain();
+
 
     master.gain.value=1;
 
@@ -2152,13 +2741,9 @@ async function exportWav(){
       };
 
 
-    /*
-      소리를 실제로 들려주지 않고
-      처리만 유지
-    */
-
     silentGain=
       context.createGain();
+
 
     silentGain.gain.value=0;
 
@@ -2167,9 +2752,11 @@ async function exportWav(){
       recorder
     );
 
+
     recorder.connect(
       silentGain
     );
+
 
     silentGain.connect(
       context.destination
@@ -2179,18 +2766,24 @@ async function exportWav(){
     const shifters=[];
 
 
+    /*
+      각 트랙 생성
+    */
+
     for(
       const track
       of tracks
     ){
 
+      if(track.muted){
+        continue;
+      }
+
+
       const duration=
-        Math.max(
-          0,
-          track.trimEnd-
-          track.trimStart
-        )/
-        track.speed;
+        getTrackDuration(
+          track
+        );
 
 
       if(duration<=0){
@@ -2232,18 +2825,46 @@ async function exportWav(){
 
       shifters.push({
         shifter:shifter,
+        track:track,
         duration:duration
       });
+
+
+      /*
+        ★ 중요
+        Trim End에 도달하면
+        해당 SoundTouch를 끊음
+      */
+
+      setTimeout(
+        ()=>{
+
+          try{
+            shifter.disconnect();
+          }catch(e){}
+
+
+          try{
+            shifter.off();
+          }catch(e){}
+
+        },
+        (
+          track.startPosition+
+          duration+
+          0.4
+        )*
+        1000
+      );
 
     }
 
 
     /*
-      시작 위치를 포함한
-      전체 길이만큼 처리
+      WAV 처리 진행률
     */
 
-    const startTime=
+    const exportStarted=
       performance.now();
 
 
@@ -2257,7 +2878,7 @@ async function exportWav(){
               const elapsed=
                 (
                   performance.now()-
-                  startTime
+                  exportStarted
                 )/1000;
 
 
@@ -2280,7 +2901,7 @@ async function exportWav(){
 
               if(
                 elapsed>=
-                total+0.7
+                total+0.8
               ){
 
                 clearInterval(
@@ -2312,6 +2933,7 @@ async function exportWav(){
         item.shifter.disconnect();
       }catch(e){}
 
+
       try{
         item.shifter.off();
       }catch(e){}
@@ -2333,7 +2955,7 @@ async function exportWav(){
 
 
     /*
-      WAV 데이터 만들기
+      WAV 데이터
     */
 
     const sampleRate=
@@ -2473,7 +3095,9 @@ async function exportWav(){
 
 
     setTimeout(
-      ()=>URL.revokeObjectURL(url),
+      ()=>{
+        URL.revokeObjectURL(url);
+      },
       3000
     );
 
@@ -2487,6 +3111,7 @@ async function exportWav(){
   }catch(error){
 
     console.error(error);
+
 
     alert(
       "WAV 저장 중 오류가 발생했습니다.\n"+
@@ -2531,11 +3156,13 @@ function createWav(
 
   const blockAlign=
     channels*
-    bitsPerSample/8;
+    bitsPerSample/
+    8;
 
   const byteRate=
     sampleRate*
     blockAlign;
+
 
   const dataSize=
     left.length*
@@ -2544,7 +3171,8 @@ function createWav(
 
   const buffer=
     new ArrayBuffer(
-      44+dataSize
+      44+
+      dataSize
     );
 
 
@@ -2563,7 +3191,8 @@ function createWav(
 
   view.setUint32(
     4,
-    36+dataSize,
+    36+
+    dataSize,
     true
   );
 
@@ -2745,6 +3374,7 @@ function setStatus(
       id
     );
 
+
   if(element){
 
     element.textContent=
@@ -2761,7 +3391,9 @@ function setStatus(
 
 renderTracks();
 
+updateProjectDuration();
+
 </script>
 
 </body>
-      </html>
+  </html>
