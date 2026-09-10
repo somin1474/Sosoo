@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎵 Pitch Editor</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    background: #f3efff;
+    color: #29213d;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background: #7655c8;
+    color: white;
+    padding: 22px 16px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 25px;
+}
+
+header p {
+    margin: 7px 0 0;
+    opacity: 0.9;
+    font-size: 13px;
+}
+
+.container {
+    width: min(95%, 600px);
+    margin: 18px auto 40px;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 18px rgba(70, 45, 120, 0.10);
+}
+
+.title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px dashed #a894df;
+    border-radius: 12px;
+    background: #faf8ff;
+}
+
+.file-name {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #665b7d;
+    word-break: break-all;
+}
+
+.current {
+    text-align: center;
+    padding: 15px 0 20px;
+}
+
+.current .note {
+    font-size: 48px;
+    font-weight: bold;
+    color: #7655c8;
+}
+
+.current .semi {
+    font-size: 14px;
+    color: #777;
+    margin-top: 4px;
+}
+
+.note-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.note-button {
+    border: none;
+    border-radius: 12px;
+    background: #eee8ff;
+    color: #4f398b;
+    padding: 14px 4px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.note-button:active {
+    transform: scale(0.96);
+}
+
+.note-button.active {
+    background: #7655c8;
+    color: white;
+}
+
+.adjust {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.adjust button {
+    flex: 1;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #ded4ff;
+    color: #4f398b;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.controls button {
+    flex: 1;
+    border: none;
+    border-radius: 13px;
+    padding: 15px 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.play {
+    background: #7655c8;
+    color: white;
+}
+
+.stop {
+    background: #e9e4f5;
+    color: #443957;
+}
+
+.record {
+    width: 100%;
+    margin-top: 12px;
+    border: none;
+    border-radius: 13px;
+    padding: 16px;
+    background: #d95772;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.record.recording {
+    background: #a51e3d;
+}
+
+.save {
+    width: 100%;
+    margin-top: 12px;
+    border: none;
+    border-radius: 13px;
+    padding: 16px;
+    background: #5d42a5;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.save:disabled {
+    background: #c8c2d5;
+}
+
+.status {
+    text-align: center;
+    font-size: 13px;
+    color: #6d637a;
+    margin-top: 12px;
+    min-height: 18px;
+}
+
+audio {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.info {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #655c73;
+}
+
+.warning {
+    background: #fff7df;
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 12px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎵 Pitch Editor</h1>
+    <p>오디오의 음정을 자유롭게 조절하세요</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <div class="title">🎧 오디오 선택</div>
+
+        <input
+            type="file"
+            id="audioFile"
+            accept="audio/*"
+        >
+
+        <div class="file-name" id="fileName">
+            아직 파일을 선택하지 않았습니다.
+        </div>
+
+        <audio id="originalAudio" controls></audio>
+    </div>
+
+
+    <div class="card">
+
+        <div class="title">🎹 음정 조절</div>
+
+        <div class="current">
+            <div class="note" id="currentNote">C</div>
+            <div class="semi" id="semiText">
+                0 semitones
+            </div>
+        </div>
+
+        <div class="note-grid">
+
+            <button class="note-button active" data-note="C">C</button>
+            <button class="note-button" data-note="C#">C#</button>
+            <button class="note-button" data-note="D">D</button>
+            <button class="note-button" data-note="D#">D#</button>
+
+            <button class="note-button" data-note="E">E</button>
+            <button class="note-button" data-note="F">F</button>
+            <button class="note-button" data-note="F#">F#</button>
+            <button class="note-button" data-note="G">G</button>
+
+            <button class="note-button" data-note="G#">G#</button>
+            <button class="note-button" data-note="A">A</button>
+            <button class="note-button" data-note="A#">A#</button>
+            <button class="note-button" data-note="B">B</button>
+
+        </div>
+
+        <div class="adjust">
+            <button id="minus">− 1</button>
+            <button id="plus">+ 1</button>
+        </div>
+
+        <div class="controls">
+            <button class="play" id="play">▶ 재생</button>
+            <button class="stop" id="stop">⏹ 정지</button>
+        </div>
+
+        <div class="status" id="status"></div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="title">💾 편집한 음원 저장</div>
+
+        <div class="info">
+            아래 버튼을 누르면 현재 적용된 음정을 실시간으로 녹음합니다.
+            녹음이 끝나면 휴대폰에 저장할 수 있습니다.
+        </div>
+
+        <button class="record" id="record">
+            🔴 편집 음원 녹음 시작
+        </button>
+
+        <button class="save" id="save" disabled>
+            💾 녹음된 음원 저장
+        </button>
+
+        <div class="status" id="recordStatus"></div>
+
+        <div class="warning">
+            ⚠️ 저장 파일은 현재 브라우저에서 녹음된 WebM 형식입니다.
+            대부분의 최신 휴대폰에서 재생할 수 있습니다.
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/tone@15.1.22/build/Tone.js"></script>
+
+<script>
+
+let audioFile = null;
+let audioURL = null;
+
+let pitch = 0;
+
+let player = null;
+let pitchShift = null;
+
+let recorder = null;
+let recordedChunks = [];
+let recordedBlob = null;
+
+const fileInput = document.getElementById("audioFile");
+const fileName = document.getElementById("fileName");
+
+const currentNote = document.getElementById("currentNote");
+const semiText = document.getElementById("semiText");
+
+const playButton = document.getElementById("play");
+const stopButton = document.getElementById("stop");
+
+const minusButton = document.getElementById("minus");
+const plusButton = document.getElementById("plus");
+
+const status = document.getElementById("status");
+
+const recordButton = document.getElementById("record");
+const saveButton = document.getElementById("save");
+const recordStatus = document.getElementById("recordStatus");
+
+const noteNames = [
+    "C",
+    "C#",
+    "D",
+    "D#",
+    "E",
+    "F",
+    "F#",
+    "G",
+    "G#",
+    "A",
+    "A#",
+    "B"
+];
+
+const noteValues = {
+    "C": 0,
+    "C#": 1,
+    "D": 2,
+    "D#": 3,
+    "E": 4,
+    "F": 5,
+    "F#": 6,
+    "G": 7,
+    "G#": 8,
+    "A": 9,
+    "A#": 10,
+    "B": 11
+};
+
+
+/* -------------------------
+   파일 선택
+------------------------- */
+
+fileInput.addEventListener("change", function() {
+
+    const file = this.files[0];
+
+    if (!file) return;
+
+    audioFile = file;
+
+    fileName.textContent =
+        "선택됨: " + file.name;
+
+    if (audioURL) {
+        URL.revokeObjectURL(audioURL);
+    }
+
+    audioURL = URL.createObjectURL(file);
+
+    document.getElementById("originalAudio").src =
+        audioURL;
+
+    status.textContent =
+        "오디오 파일을 불러왔습니다.";
+
+});
+
+
+/* -------------------------
+   음 버튼
+------------------------- */
+
+document.querySelectorAll(".note-button")
+.forEach(button => {
+
+    button.addEventListener("click", function() {
+
+        const note = this.dataset.note;
+
+        pitch = noteValues[note];
+
+        document
+            .querySelectorAll(".note-button")
+            .forEach(b => b.classList.remove("active"));
+
+        this.classList.add("active");
+
+        updatePitch();
+
+    });
+
+});
+
+
+/* -------------------------
+   + / -
+------------------------- */
+
+minusButton.addEventListener("click", function() {
+
+    pitch--;
+
+    updatePitch();
+
+});
+
+
+plusButton.addEventListener("click", function() {
+
+    pitch++;
+
+    updatePitch();
+
+});
+
+
+/* -------------------------
+   화면 업데이트
+------------------------- */
+
+function updatePitch() {
+
+    let normalized =
+        ((pitch % 12) + 12) % 12;
+
+    let octave =
+        Math.floor(pitch / 12);
+
+    let note =
+        noteNames[normalized];
+
+    currentNote.textContent =
+        note;
+
+    let sign =
+        pitch > 0 ? "+" : "";
+
+    semiText.textContent =
+        sign + pitch + " semitones";
+
+    document
+        .querySelectorAll(".note-button")
+        .forEach(button => {
+
+            button.classList.remove("active");
+
+            if (
+                noteValues[button.dataset.note]
+                === normalized
+            ) {
+                button.classList.add("active");
+            }
+
+        });
+
+    if (pitchShift) {
+
+        pitchShift.pitch =
+            pitch;
+
+    }
+
+}
+
+
+/* -------------------------
+   Tone.js 초기화
+------------------------- */
+
+async function initializeAudio() {
+
+    if (!audioFile) {
+
+        alert("먼저 오디오 파일을 선택해주세요.");
+
+        return false;
+
+    }
+
+    await Tone.start();
+
+    if (!player) {
+
+        player =
+            new Tone.Player(audioURL);
+
+        pitchShift =
+            new Tone.PitchShift({
+                pitch: pitch
+            });
+
+        player
+            .connect(pitchShift);
+
+        pitchShift
+            .toDestination();
+
+        await Tone.loaded();
+
+    }
+
+    pitchShift.pitch = pitch;
+
+    return true;
+}
+
+
+/* -------------------------
+   재생
+------------------------- */
+
+playButton.addEventListener("click",
+async function() {
+
+    const ok =
+        await initializeAudio();
+
+    if (!ok) return;
+
+    if (player.state === "started") {
+
+        player.stop();
+
+        playButton.textContent =
+            "▶ 재생";
+
+        return;
+
+    }
+
+    player.stop();
+
+    pitchShift.pitch =
+        pitch;
+
+    player.start();
+
+    playButton.textContent =
+        "⏸ 재생 중";
+
+    status.textContent =
+        "현재 음정: " +
+        (pitch > 0 ? "+" : "") +
+        pitch +
+        " 반음";
+
+});
+
+
+/* -------------------------
+   정지
+------------------------- */
+
+stopButton.addEventListener("click",
+function() {
+
+    if (player) {
+        player.stop();
+    }
+
+    playButton.textContent =
+        "▶ 재생";
+
+    status.textContent =
+        "정지했습니다.";
+
+});
+
+
+/* -------------------------
+   녹음
+------------------------- */
+
+recordButton.addEventListener("click",
+async function() {
+
+    const ok =
+        await initializeAudio();
+
+    if (!ok) return;
+
+    await Tone.start();
+
+    if (recorder &&
+        recorder.state === "recording") {
+
+        recorder.stop();
+
+        return;
+
+    }
+
+
+    recordedChunks = [];
+    recordedBlob = null;
+
+    saveButton.disabled = true;
+
+
+    /*
+       Tone.js 출력과 녹음기를 연결
+    */
+
+    const destination =
+        Tone.getContext().createMediaStreamDestination();
+
+    pitchShift.connect(destination);
+
+
+    recorder =
+        new MediaRecorder(
+            destination.stream,
+            {
+                mimeType: "audio/webm"
+            }
+        );
+
+
+    recorder.ondataavailable =
+        function(event) {
+
+            if (event.data.size > 0) {
+
+                recordedChunks.push(
+                    event.data
+                );
+
+            }
+
+        };
+
+
+    recorder.onstop =
+        function() {
+
+            recordedBlob =
+                new Blob(
+                    recordedChunks,
+                    {
+                        type: "audio/webm"
+                    }
+                );
+
+            saveButton.disabled =
+                false;
+
+            recordButton.textContent =
+                "🔴 편집 음원 다시 녹음";
+
+            recordButton.classList.remove(
+                "recording"
+            );
+
+            recordStatus.textContent =
+                "녹음 완료! 저장 버튼을 눌러주세요.";
+
+            pitchShift.disconnect(
+                destination
+            );
+
+        };
+
+
+    recorder.start();
+
+    recordButton.textContent =
+        "⏹ 녹음 종료";
+
+    recordButton.classList.add(
+        "recording"
+    );
+
+    recordStatus.textContent =
+        "현재 음정으로 녹음 중입니다.";
+
+    player.stop();
+
+    pitchShift.pitch =
+        pitch;
+
+    player.start();
+
+});
+
+
+/* -------------------------
+   저장
+------------------------- */
+
+saveButton.addEventListener("click",
+function() {
+
+    if (!recordedBlob) {
+
+        alert("먼저 편집 음원을 녹음해주세요.");
+
+        return;
+
+    }
+
+    const url =
+        URL.createObjectURL(recordedBlob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+        "pitch-edited-" +
+        Date.now() +
+        ".webm";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+    setTimeout(function() {
+
+        URL.revokeObjectURL(url);
+
+    }, 1000);
+
+    recordStatus.textContent =
+        "저장 파일을 만들었습니다.";
+
+});
+
+
+/* -------------------------
+   초기값
+------------------------- */
+
+updatePitch();
+
+</script>
+
+</body>
+</html>
