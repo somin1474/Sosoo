@@ -2,217 +2,254 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-<title>🎵 Pitch Editor</title>
+<title>🎵 Pocket Music Editor</title>
 
 <style>
 * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    background: #f3efff;
-    color: #29213d;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f3efff;
+  color: #26202f;
+  font-family: Arial, "Noto Sans KR", sans-serif;
 }
 
 header {
-    background: #7655c8;
-    color: white;
-    padding: 22px 16px;
-    text-align: center;
+  background: #7655c8;
+  color: white;
+  padding: 18px 15px;
+  text-align: center;
+  box-shadow: 0 3px 12px #0002;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 25px;
+  margin: 0;
+  font-size: 23px;
 }
 
 header p {
-    margin: 7px 0 0;
-    opacity: 0.9;
-    font-size: 13px;
+  margin: 7px 0 0;
+  font-size: 13px;
+  opacity: .9;
 }
 
 .container {
-    width: min(95%, 600px);
-    margin: 18px auto 40px;
+  max-width: 850px;
+  margin: auto;
+  padding: 15px;
 }
 
 .card {
-    background: white;
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 15px;
-    box-shadow: 0 5px 18px rgba(70, 45, 120, 0.10);
+  background: white;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 15px;
+  box-shadow: 0 3px 15px #0001;
 }
 
-.title {
-    font-weight: bold;
-    font-size: 18px;
-    margin-bottom: 15px;
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 14px;
+  background: #7655c8;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
 }
 
-input[type="file"] {
-    width: 100%;
-    padding: 12px;
-    border: 2px dashed #a894df;
-    border-radius: 12px;
-    background: #faf8ff;
+button:active {
+  transform: scale(.97);
 }
 
-.file-name {
-    margin-top: 12px;
-    font-size: 14px;
-    color: #665b7d;
-    word-break: break-all;
+button.secondary {
+  background: #e9e2ff;
+  color: #5738a5;
 }
 
-.current {
-    text-align: center;
-    padding: 15px 0 20px;
+button.danger {
+  background: #e34f63;
 }
 
-.current .note {
-    font-size: 48px;
-    font-weight: bold;
-    color: #7655c8;
+button.dark {
+  background: #40394b;
 }
 
-.current .semi {
-    font-size: 14px;
-    color: #777;
-    margin-top: 4px;
+input[type=file] {
+  width: 100%;
+  padding: 12px;
+  background: #f5f2fc;
+  border-radius: 12px;
 }
 
-.note-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+.track {
+  border: 2px solid #eee8ff;
+  border-radius: 16px;
+  padding: 13px;
+  margin-top: 12px;
 }
 
-.note-button {
-    border: none;
-    border-radius: 12px;
-    background: #eee8ff;
-    color: #4f398b;
-    padding: 14px 4px;
-    font-size: 16px;
-    font-weight: bold;
+.track.selected {
+  border-color: #7655c8;
 }
 
-.note-button:active {
-    transform: scale(0.96);
+.track-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.note-button.active {
-    background: #7655c8;
-    color: white;
+.track-title strong {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.adjust {
-    display: flex;
-    gap: 10px;
-    margin-top: 12px;
+.wave-wrap {
+  margin-top: 12px;
+  background: #f2eff8;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.adjust button {
-    flex: 1;
-    border: none;
-    border-radius: 12px;
-    padding: 14px;
-    font-size: 18px;
-    font-weight: bold;
-    background: #ded4ff;
-    color: #4f398b;
+canvas {
+  display: block;
+  width: 100%;
+  height: 95px;
 }
 
-.controls {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
+.time {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #777;
+  margin-top: 5px;
 }
 
-.controls button {
-    flex: 1;
-    border: none;
-    border-radius: 13px;
-    padding: 15px 5px;
-    font-size: 16px;
-    font-weight: bold;
+.control {
+  margin-top: 13px;
 }
 
-.play {
-    background: #7655c8;
-    color: white;
+.control label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 5px;
 }
 
-.stop {
-    background: #e9e4f5;
-    color: #443957;
+input[type=range] {
+  width: 100%;
+  accent-color: #7655c8;
 }
 
-.record {
-    width: 100%;
-    margin-top: 12px;
-    border: none;
-    border-radius: 13px;
-    padding: 16px;
-    background: #d95772;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-.record.recording {
-    background: #a51e3d;
+.small {
+  font-size: 12px;
+  color: #777;
 }
 
-.save {
-    width: 100%;
-    margin-top: 12px;
-    border: none;
-    border-radius: 13px;
-    padding: 16px;
-    background: #5d42a5;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
+.row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.save:disabled {
-    background: #c8c2d5;
+.player {
+  position: sticky;
+  bottom: 10px;
+  z-index: 10;
 }
 
-.status {
-    text-align: center;
-    font-size: 13px;
-    color: #6d637a;
-    margin-top: 12px;
-    min-height: 18px;
+.big-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
 }
 
-audio {
-    width: 100%;
-    margin-top: 10px;
+.big-buttons button {
+  min-width: 60px;
+  font-size: 20px;
 }
 
-.info {
-    font-size: 13px;
-    line-height: 1.6;
-    color: #655c73;
+.timeline {
+  height: 70px;
+  background: #eeeafa;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
 }
 
-.warning {
-    background: #fff7df;
-    border-radius: 12px;
-    padding: 12px;
-    margin-top: 12px;
-    font-size: 12px;
-    line-height: 1.5;
+.timeline-track {
+  height: 42px;
+  position: absolute;
+  top: 14px;
+  border-radius: 8px;
+  background: #7655c8;
+  color: white;
+  padding: 12px 8px;
+  font-size: 11px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.playhead {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: red;
+  left: 0;
+  top: 0;
+  z-index: 5;
+}
+
+.notice {
+  background: #f1ecff;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #55476e;
+}
+
+.empty {
+  text-align: center;
+  color: #888;
+  padding: 35px 10px;
+}
+
+h2 {
+  font-size: 17px;
+  margin-top: 0;
+}
+
+.value {
+  color: #7655c8;
+  font-weight: bold;
+}
+
+@media(max-width:500px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  header h1 {
+    font-size: 21px;
+  }
+
+  button {
+    padding: 10px 12px;
+  }
 }
 </style>
 </head>
@@ -220,99 +257,260 @@ audio {
 <body>
 
 <header>
-    <h1>🎵 Pitch Editor</h1>
-    <p>오디오의 음정을 자유롭게 조절하세요</p>
+  <h1>🎵 Pocket Music Editor</h1>
+  <p>휴대폰에서 사용하는 간단한 음악 편집기</p>
 </header>
 
 <div class="container">
 
-    <div class="card">
-        <div class="title">🎧 오디오 선택</div>
+  <div class="card">
+    <h2>📂 음악 추가</h2>
+
+    <input
+      id="fileInput"
+      type="file"
+      accept="audio/*"
+      multiple
+    >
+
+    <div style="height:10px"></div>
+
+    <div class="notice">
+      음악 파일은 이 브라우저 안에서 처리됩니다.<br>
+      서버에 음악 파일을 업로드하지 않습니다.
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>🎬 타임라인</h2>
+
+    <div id="timeline" class="timeline">
+      <div id="playhead" class="playhead"></div>
+    </div>
+  </div>
+
+
+  <div id="tracks" class="card">
+    <h2>🎵 트랙</h2>
+
+    <div id="empty" class="empty">
+      아직 음악이 없습니다.<br>
+      위에서 음악 파일을 추가해주세요.
+    </div>
+  </div>
+
+
+  <div id="editor" class="card" style="display:none">
+
+    <h2>🎚️ 선택한 트랙 편집</h2>
+
+    <div id="selectedName" class="small"></div>
+
+    <div class="control">
+      <label>
+        <span>🔊 볼륨</span>
+        <span id="volumeValue" class="value">100%</span>
+      </label>
+
+      <input
+        id="volume"
+        type="range"
+        min="0"
+        max="150"
+        value="100"
+      >
+    </div>
+
+
+    <div class="control">
+      <label>
+        <span>🎚️ 음정</span>
+        <span id="pitchValue" class="value">0 반음</span>
+      </label>
+
+      <input
+        id="pitch"
+        type="range"
+        min="-12"
+        max="12"
+        value="0"
+      >
+    </div>
+
+
+    <div class="control">
+      <label>
+        <span>⏩ 속도</span>
+        <span id="speedValue" class="value">1.00x</span>
+      </label>
+
+      <input
+        id="speed"
+        type="range"
+        min="0.5"
+        max="2"
+        step="0.01"
+        value="1"
+      >
+    </div>
+
+
+    <div class="grid">
+
+      <div class="control">
+        <label>
+          <span>✂️ 시작 위치</span>
+          <span id="startValue" class="value">0.00s</span>
+        </label>
 
         <input
-            type="file"
-            id="audioFile"
-            accept="audio/*"
+          id="trimStart"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0"
         >
-
-        <div class="file-name" id="fileName">
-            아직 파일을 선택하지 않았습니다.
-        </div>
-
-        <audio id="originalAudio" controls></audio>
-    </div>
+      </div>
 
 
-    <div class="card">
+      <div class="control">
+        <label>
+          <span>✂️ 끝 위치</span>
+          <span id="endValue" class="value">0.00s</span>
+        </label>
 
-        <div class="title">🎹 음정 조절</div>
-
-        <div class="current">
-            <div class="note" id="currentNote">C</div>
-            <div class="semi" id="semiText">
-                0 semitones
-            </div>
-        </div>
-
-        <div class="note-grid">
-
-            <button class="note-button active" data-note="C">C</button>
-            <button class="note-button" data-note="C#">C#</button>
-            <button class="note-button" data-note="D">D</button>
-            <button class="note-button" data-note="D#">D#</button>
-
-            <button class="note-button" data-note="E">E</button>
-            <button class="note-button" data-note="F">F</button>
-            <button class="note-button" data-note="F#">F#</button>
-            <button class="note-button" data-note="G">G</button>
-
-            <button class="note-button" data-note="G#">G#</button>
-            <button class="note-button" data-note="A">A</button>
-            <button class="note-button" data-note="A#">A#</button>
-            <button class="note-button" data-note="B">B</button>
-
-        </div>
-
-        <div class="adjust">
-            <button id="minus">− 1</button>
-            <button id="plus">+ 1</button>
-        </div>
-
-        <div class="controls">
-            <button class="play" id="play">▶ 재생</button>
-            <button class="stop" id="stop">⏹ 정지</button>
-        </div>
-
-        <div class="status" id="status"></div>
+        <input
+          id="trimEnd"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="1"
+        >
+      </div>
 
     </div>
 
 
-    <div class="card">
+    <h3>🎛️ 음색</h3>
 
-        <div class="title">💾 편집한 음원 저장</div>
+    <div class="control">
+      <label>
+        <span>저음</span>
+        <span id="bassValue" class="value">0 dB</span>
+      </label>
 
-        <div class="info">
-            아래 버튼을 누르면 현재 적용된 음정을 실시간으로 녹음합니다.
-            녹음이 끝나면 휴대폰에 저장할 수 있습니다.
-        </div>
+      <input
+        id="bass"
+        type="range"
+        min="-15"
+        max="15"
+        value="0"
+      >
+    </div>
 
-        <button class="record" id="record">
-            🔴 편집 음원 녹음 시작
-        </button>
 
-        <button class="save" id="save" disabled>
-            💾 녹음된 음원 저장
-        </button>
+    <div class="control">
+      <label>
+        <span>고음</span>
+        <span id="trebleValue" class="value">0 dB</span>
+      </label>
 
-        <div class="status" id="recordStatus"></div>
+      <input
+        id="treble"
+        type="range"
+        min="-15"
+        max="15"
+        value="0"
+      >
+    </div>
 
-        <div class="warning">
-            ⚠️ 저장 파일은 현재 브라우저에서 녹음된 WebM 형식입니다.
-            대부분의 최신 휴대폰에서 재생할 수 있습니다.
-        </div>
+
+    <div class="control">
+      <label>
+        <span>🔁 에코</span>
+        <span id="echoValue" class="value">0%</span>
+      </label>
+
+      <input
+        id="echo"
+        type="range"
+        min="0"
+        max="70"
+        value="0"
+      >
+    </div>
+
+
+    <div style="height:10px"></div>
+
+    <div class="row">
+
+      <button id="muteBtn" class="secondary">
+        🔇 음소거
+      </button>
+
+      <button id="resetBtn" class="secondary">
+        ↩️ 초기화
+      </button>
+
+      <button id="removeBtn" class="danger">
+        🗑️ 트랙 삭제
+      </button>
 
     </div>
+
+  </div>
+
+
+  <div class="card player">
+
+    <div class="big-buttons">
+
+      <button id="backBtn" class="secondary">
+        ⏪
+      </button>
+
+      <button id="playBtn">
+        ▶️
+      </button>
+
+      <button id="stopBtn" class="dark">
+        ⏹️
+      </button>
+
+      <button id="forwardBtn" class="secondary">
+        ⏩
+      </button>
+
+    </div>
+
+    <div style="height:10px"></div>
+
+    <div id="currentTime" style="text-align:center">
+      00:00 / 00:00
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>💾 저장</h2>
+
+    <button id="exportBtn" style="width:100%;font-size:16px">
+      💾 WAV 파일로 저장
+    </button>
+
+    <div style="height:10px"></div>
+
+    <div class="small">
+      저장할 때 편집된 트랙들을 하나의 WAV 파일로 합칩니다.
+    </div>
+
+  </div>
 
 </div>
 
@@ -321,467 +519,749 @@ audio {
 
 <script>
 
-let audioFile = null;
-let audioURL = null;
+let tracks = [];
+let selectedIndex = -1;
 
-let pitch = 0;
+let audioContext = null;
+let masterGain = null;
 
-let player = null;
-let pitchShift = null;
-
-let recorder = null;
-let recordedChunks = [];
-let recordedBlob = null;
-
-const fileInput = document.getElementById("audioFile");
-const fileName = document.getElementById("fileName");
-
-const currentNote = document.getElementById("currentNote");
-const semiText = document.getElementById("semiText");
-
-const playButton = document.getElementById("play");
-const stopButton = document.getElementById("stop");
-
-const minusButton = document.getElementById("minus");
-const plusButton = document.getElementById("plus");
-
-const status = document.getElementById("status");
-
-const recordButton = document.getElementById("record");
-const saveButton = document.getElementById("save");
-const recordStatus = document.getElementById("recordStatus");
-
-const noteNames = [
-    "C",
-    "C#",
-    "D",
-    "D#",
-    "E",
-    "F",
-    "F#",
-    "G",
-    "G#",
-    "A",
-    "A#",
-    "B"
-];
-
-const noteValues = {
-    "C": 0,
-    "C#": 1,
-    "D": 2,
-    "D#": 3,
-    "E": 4,
-    "F": 5,
-    "F#": 6,
-    "G": 7,
-    "G#": 8,
-    "A": 9,
-    "A#": 10,
-    "B": 11
-};
+let playing = false;
+let startedAt = 0;
+let animation = null;
 
 
-/* -------------------------
-   파일 선택
-------------------------- */
+/* =========================
+   기본 초기화
+========================= */
 
-fileInput.addEventListener("change", function() {
+function initAudio() {
 
-    const file = this.files[0];
+  if (!audioContext) {
 
-    if (!file) return;
+    audioContext =
+      new (window.AudioContext ||
+           window.webkitAudioContext)();
 
-    audioFile = file;
+    masterGain =
+      audioContext.createGain();
 
-    fileName.textContent =
-        "선택됨: " + file.name;
+    masterGain.gain.value = 1;
 
-    if (audioURL) {
-        URL.revokeObjectURL(audioURL);
-    }
-
-    audioURL = URL.createObjectURL(file);
-
-    document.getElementById("originalAudio").src =
-        audioURL;
-
-    status.textContent =
-        "오디오 파일을 불러왔습니다.";
-
-});
-
-
-/* -------------------------
-   음 버튼
-------------------------- */
-
-document.querySelectorAll(".note-button")
-.forEach(button => {
-
-    button.addEventListener("click", function() {
-
-        const note = this.dataset.note;
-
-        pitch = noteValues[note];
-
-        document
-            .querySelectorAll(".note-button")
-            .forEach(b => b.classList.remove("active"));
-
-        this.classList.add("active");
-
-        updatePitch();
-
-    });
-
-});
-
-
-/* -------------------------
-   + / -
-------------------------- */
-
-minusButton.addEventListener("click", function() {
-
-    pitch--;
-
-    updatePitch();
-
-});
-
-
-plusButton.addEventListener("click", function() {
-
-    pitch++;
-
-    updatePitch();
-
-});
-
-
-/* -------------------------
-   화면 업데이트
-------------------------- */
-
-function updatePitch() {
-
-    let normalized =
-        ((pitch % 12) + 12) % 12;
-
-    let octave =
-        Math.floor(pitch / 12);
-
-    let note =
-        noteNames[normalized];
-
-    currentNote.textContent =
-        note;
-
-    let sign =
-        pitch > 0 ? "+" : "";
-
-    semiText.textContent =
-        sign + pitch + " semitones";
-
-    document
-        .querySelectorAll(".note-button")
-        .forEach(button => {
-
-            button.classList.remove("active");
-
-            if (
-                noteValues[button.dataset.note]
-                === normalized
-            ) {
-                button.classList.add("active");
-            }
-
-        });
-
-    if (pitchShift) {
-
-        pitchShift.pitch =
-            pitch;
-
-    }
-
+    masterGain.connect(
+      audioContext.destination
+    );
+  }
 }
 
 
-/* -------------------------
-   Tone.js 초기화
-------------------------- */
+/* =========================
+   파일 추가
+========================= */
 
-async function initializeAudio() {
+document
+.getElementById("fileInput")
+.addEventListener("change", async function(e) {
 
-    if (!audioFile) {
+  initAudio();
 
-        alert("먼저 오디오 파일을 선택해주세요.");
+  const files = [...e.target.files];
 
-        return false;
+  for (const file of files) {
 
-    }
+    try {
 
-    await Tone.start();
+      const arrayBuffer =
+        await file.arrayBuffer();
 
-    if (!player) {
-
-        player =
-            new Tone.Player(audioURL);
-
-        pitchShift =
-            new Tone.PitchShift({
-                pitch: pitch
-            });
-
-        player
-            .connect(pitchShift);
-
-        pitchShift
-            .toDestination();
-
-        await Tone.loaded();
-
-    }
-
-    pitchShift.pitch = pitch;
-
-    return true;
-}
-
-
-/* -------------------------
-   재생
-------------------------- */
-
-playButton.addEventListener("click",
-async function() {
-
-    const ok =
-        await initializeAudio();
-
-    if (!ok) return;
-
-    if (player.state === "started") {
-
-        player.stop();
-
-        playButton.textContent =
-            "▶ 재생";
-
-        return;
-
-    }
-
-    player.stop();
-
-    pitchShift.pitch =
-        pitch;
-
-    player.start();
-
-    playButton.textContent =
-        "⏸ 재생 중";
-
-    status.textContent =
-        "현재 음정: " +
-        (pitch > 0 ? "+" : "") +
-        pitch +
-        " 반음";
-
-});
-
-
-/* -------------------------
-   정지
-------------------------- */
-
-stopButton.addEventListener("click",
-function() {
-
-    if (player) {
-        player.stop();
-    }
-
-    playButton.textContent =
-        "▶ 재생";
-
-    status.textContent =
-        "정지했습니다.";
-
-});
-
-
-/* -------------------------
-   녹음
-------------------------- */
-
-recordButton.addEventListener("click",
-async function() {
-
-    const ok =
-        await initializeAudio();
-
-    if (!ok) return;
-
-    await Tone.start();
-
-    if (recorder &&
-        recorder.state === "recording") {
-
-        recorder.stop();
-
-        return;
-
-    }
-
-
-    recordedChunks = [];
-    recordedBlob = null;
-
-    saveButton.disabled = true;
-
-
-    /*
-       Tone.js 출력과 녹음기를 연결
-    */
-
-    const destination =
-        Tone.getContext().createMediaStreamDestination();
-
-    pitchShift.connect(destination);
-
-
-    recorder =
-        new MediaRecorder(
-            destination.stream,
-            {
-                mimeType: "audio/webm"
-            }
+      const buffer =
+        await audioContext.decodeAudioData(
+          arrayBuffer
         );
 
+      tracks.push({
 
-    recorder.ondataavailable =
-        function(event) {
+        name: file.name,
 
-            if (event.data.size > 0) {
+        buffer: buffer,
 
-                recordedChunks.push(
-                    event.data
-                );
+        volume: 1,
 
-            }
+        pitch: 0,
 
-        };
+        speed: 1,
 
+        trimStart: 0,
 
-    recorder.onstop =
-        function() {
+        trimEnd: buffer.duration,
 
-            recordedBlob =
-                new Blob(
-                    recordedChunks,
-                    {
-                        type: "audio/webm"
-                    }
-                );
+        bass: 0,
 
-            saveButton.disabled =
-                false;
+        treble: 0,
 
-            recordButton.textContent =
-                "🔴 편집 음원 다시 녹음";
+        echo: 0,
 
-            recordButton.classList.remove(
-                "recording"
-            );
+        muted: false
 
-            recordStatus.textContent =
-                "녹음 완료! 저장 버튼을 눌러주세요.";
+      });
 
-            pitchShift.disconnect(
-                destination
-            );
+    } catch(err) {
 
-        };
-
-
-    recorder.start();
-
-    recordButton.textContent =
-        "⏹ 녹음 종료";
-
-    recordButton.classList.add(
-        "recording"
-    );
-
-    recordStatus.textContent =
-        "현재 음정으로 녹음 중입니다.";
-
-    player.stop();
-
-    pitchShift.pitch =
-        pitch;
-
-    player.start();
-
-});
-
-
-/* -------------------------
-   저장
-------------------------- */
-
-saveButton.addEventListener("click",
-function() {
-
-    if (!recordedBlob) {
-
-        alert("먼저 편집 음원을 녹음해주세요.");
-
-        return;
+      alert(
+        "파일을 불러오지 못했습니다: " +
+        file.name
+      );
 
     }
 
-    const url =
-        URL.createObjectURL(recordedBlob);
+  }
 
-    const a =
-        document.createElement("a");
+  renderTracks();
 
-    a.href = url;
-
-    a.download =
-        "pitch-edited-" +
-        Date.now() +
-        ".webm";
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-    setTimeout(function() {
-
-        URL.revokeObjectURL(url);
-
-    }, 1000);
-
-    recordStatus.textContent =
-        "저장 파일을 만들었습니다.";
+  e.target.value = "";
 
 });
 
 
-/* -------------------------
-   초기값
-------------------------- */
+/* =========================
+   트랙 표시
+========================= */
 
-updatePitch();
+function renderTracks() {
 
-</script>
+  const box =
+    document.getElementById("tracks");
 
-</body>
-</html>
+  const empty =
+    document.getElementById("empty");
+
+  if (tracks.length === 0) {
+
+    empty.style.display = "block";
+
+    box.innerHTML =
+      "<h2>🎵 트랙</h2>" +
+      empty.outerHTML;
+
+    return;
+  }
+
+  box.innerHTML =
+    "<h2>🎵 트랙</h2>";
+
+  tracks.forEach((track, index) => {
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "track" +
+      (index === selectedIndex
+        ? " selected"
+        : "");
+
+    const duration =
+      track.buffer.duration;
+
+    div.innerHTML = `
+
+      <div class="track-title">
+
+        <span>🎵</span>
+
+        <strong>${escapeHtml(track.name)}</strong>
+
+        <button
+          class="secondary"
+          onclick="selectTrack(${index})"
+        >
+          편집
+        </button>
+
+      </div>
+
+      <div class="wave-wrap">
+
+        <canvas
+          id="wave-${index}"
+          width="800"
+          height="180"
+        ></canvas>
+
+      </div>
+
+      <div class="time">
+
+        <span>
+          ${formatTime(track.trimStart)}
+        </span>
+
+        <span>
+          ${formatTime(track.trimEnd)}
+        </span>
+
+      </div>
+
+    `;
+
+    box.appendChild(div);
+
+    drawWaveform(
+      track,
+      document.getElementById(
+        "wave-" + index
+      )
+    );
+
+  });
+
+  updateTimeline();
+}
+
+
+/* =========================
+   파형
+========================= */
+
+function drawWaveform(track, canvas) {
+
+  const ctx =
+    canvas.getContext("2d");
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  const data =
+    track.buffer.getChannelData(0);
+
+  const step =
+    Math.ceil(data.length /
+              canvas.width);
+
+  const amp =
+    canvas.height / 2;
+
+  ctx.beginPath();
+
+  for (
+    let i = 0;
+    i < canvas.width;
+    i++
+  ) {
+
+    let min = 1;
+    let max = -1;
+
+    const start =
+      i * step;
+
+    const end =
+      Math.min(
+        start + step,
+        data.length
+      );
+
+    for (
+      let j = start;
+      j < end;
+      j++
+    ) {
+
+      const value = data[j];
+
+      if (value < min) min = value;
+      if (value > max) max = value;
+
+    }
+
+    ctx.moveTo(
+      i,
+      (1 + min) * amp
+    );
+
+    ctx.lineTo(
+      i,
+      (1 + max) * amp
+    );
+  }
+
+  ctx.stroke();
+}
+
+
+/* =========================
+   트랙 선택
+========================= */
+
+function selectTrack(index) {
+
+  selectedIndex = index;
+
+  const track =
+    tracks[index];
+
+  document
+    .getElementById("editor")
+    .style.display = "block";
+
+  document
+    .getElementById("selectedName")
+    .textContent =
+      track.name;
+
+  document
+    .getElementById("volume")
+    .value =
+      track.volume * 100;
+
+  document
+    .getElementById("pitch")
+    .value =
+      track.pitch;
+
+  document
+    .getElementById("speed")
+    .value =
+      track.speed;
+
+  document
+    .getElementById("trimStart")
+    .max =
+      track.buffer.duration;
+
+  document
+    .getElementById("trimStart")
+    .value =
+      track.trimStart;
+
+  document
+    .getElementById("trimEnd")
+    .max =
+      track.buffer.duration;
+
+  document
+    .getElementById("trimEnd")
+    .value =
+      track.trimEnd;
+
+  document
+    .getElementById("bass")
+    .value =
+      track.bass;
+
+  document
+    .getElementById("treble")
+    .value =
+      track.treble;
+
+  document
+    .getElementById("echo")
+    .value =
+      track.echo;
+
+  updateLabels();
+
+  renderTracks();
+
+}
+
+
+/* =========================
+   컨트롤
+========================= */
+
+function selectedTrack() {
+
+  if (
+    selectedIndex < 0 ||
+    !tracks[selectedIndex]
+  ) {
+    return null;
+  }
+
+  return tracks[selectedIndex];
+}
+
+
+document
+.getElementById("volume")
+.addEventListener("input", function() {
+
+  const t = selectedTrack();
+
+  if (!t) return;
+
+  t.volume =
+    Number(this.value) / 100;
+
+  updateLabels();
+
+});
+
+
+document
+.getElementById("pitch")
+.addEventListener("input", function() {
+
+  const t = selectedTrack();
+
+  if (!t) return;
+
+  t.pitch =
+    Number(this.value);
+
+  updateLabels();
+
+});
+
+
+document
+.getElementById("speed")
+.addEventListener("input", function() {
+
+  const t = selectedTrack();
+
+  if (!t) return;
+
+  t.speed =
+    Number(this.value);
+
+  updateLabels();
+
+});
+
+
+document
+.getElementById("trimStart")
+.addEventListener("input", function() {
+
+  const t = selectedTrack();
+
+  if (!t) return;
+
+  let value =
+    Number(this.value);
+
+  if (value >= t.trimEnd) {
+
+    value =
+      Math.max(
+        0,
+        t.trimEnd - 0.1
+      );
+
+    this.value = value;
+  }
+
+  t.trimStart = value;
+
+  updateLabels();
+
+  renderTracks();
+
+});
+
+
+document
+.getElementById("trimEnd")
+.addEventListener("input", function() {
+
+  const t = selectedTrack();
+
+  if (!t) return;
+
+  let value =
+    Number(this.value);
+
+  if (value <= t.trimStart) {
+
+    value =
+      Math.min(
+        t.buffer.duration,
+        t.trimStart + 0.1
+      );
+
+    this.value = value;
+  }
+
+  t.trimEnd = value;
+
+  updateLabels();
+
+  renderTracks();
+
+});
+
+
+document
+.getElementById("bass")
+.addEventListener("input", function() {
+
+  const t = selectedTrack();
+
+  if (!t) return;
+
+  t.bass =
+    Number(this.value);
+
+  updateLabels();
+
+});
+
+
+document
+.getElementById("treble")
+.addEventListener("input", function() {
+
+  const t = selectedTrack();
+
+  if (!t) return;
+
+  t.treble =
+    Number(this.value);
+
+  updateLabels();
+
+});
+
+
+document
+.getElementById("echo")
+.addEventListener("input", function() {
+
+  const t = selectedTrack();
+
+  if (!t) return;
+
+  t.echo =
+    Number(this.value);
+
+  updateLabels();
+
+});
+
+
+function updateLabels() {
+
+  const t = selectedTrack();
+
+  if (!t) return;
+
+  document
+    .getElementById("volumeValue")
+    .textContent =
+      Math.round(t.volume * 100) + "%";
+
+  document
+    .getElementById("pitchValue")
+    .textContent =
+      (t.pitch > 0 ? "+" : "") +
+      t.pitch +
+      " 반음";
+
+  document
+    .getElementById("speedValue")
+    .textContent =
+      t.speed.toFixed(2) + "x";
+
+  document
+    .getElementById("startValue")
+    .textContent =
+      t.trimStart.toFixed(2) + "s";
+
+  document
+    .getElementById("endValue")
+    .textContent =
+      t.trimEnd.toFixed(2) + "s";
+
+  document
+    .getElementById("bassValue")
+    .textContent =
+      (t.bass > 0 ? "+" : "") +
+      t.bass +
+      " dB";
+
+  document
+    .getElementById("trebleValue")
+    .textContent =
+      (t.treble > 0 ? "+" : "") +
+      t.treble +
+      " dB";
+
+  document
+    .getElementById("echoValue")
+    .textContent =
+      t.echo + "%";
+
+}
+
+
+/* =========================
+   음소거
+========================= */
+
+document
+.getElementById("muteBtn")
+.addEventListener("click", function() {
+
+  const t = selectedTrack();
+
+  if (!t) return;
+
+  t.muted =
+    !t.muted;
+
+  this.textContent =
+    t.muted
+      ? "🔊 음소거 해제"
+      : "🔇 음소거";
+
+});
+
+
+/* =========================
+   초기화
+========================= */
+
+document
+.getElementById("resetBtn")
+.addEventListener("click", function() {
+
+  const t = selectedTrack();
+
+  if (!t) return;
+
+  t.volume = 1;
+  t.pitch = 0;
+  t.speed = 1;
+  t.trimStart = 0;
+  t.trimEnd =
+    t.buffer.duration;
+  t.bass = 0;
+  t.treble = 0;
+  t.echo = 0;
+  t.muted = false;
+
+  selectTrack(selectedIndex);
+
+});
+
+
+/* =========================
+   삭제
+========================= */
+
+document
+.getElementById("removeBtn")
+.addEventListener("click", function() {
+
+  if (selectedIndex < 0) return;
+
+  stopPlayback();
+
+  tracks.splice(
+    selectedIndex,
+    1
+  );
+
+  selectedIndex = -1;
+
+  document
+    .getElementById("editor")
+    .style.display = "none";
+
+  renderTracks();
+
+});
+
+
+/* =========================
+   Web Audio 재생
+========================= */
+
+let activeSources = [];
+
+function createSource(track) {
+
+  const source =
+    audioContext.createBufferSource();
+
+  source.buffer =
+    track.buffer;
+
+  source.playbackRate.value =
+    track.speed;
+
+  const gain =
+    audioContext.createGain();
+
+  gain.gain.value =
+    track.muted
+      ? 0
+      : track.volume;
+
+  const bass =
+    audioContext.createBiquadFilter();
+
+  bass.type =
+    "lowshelf";
+
+  bass.frequency.value =
+    180;
+
+  bass.gain.value =
+    track.bass;
+
+  const treble =
+    audioContext.createBiquadFilter();
+
+  treble.type =
+    "highshelf";
+
+  treble.frequency.value =
+    3000;
+
+  treble.gain.value =
+    track.treble;
+
+  const delay =
+    audioContext.createDelay(2);
+
+  delay.delayTime.value =
+    0.25;
+
+  const echoGain =
+    audioContext.createGain();
+
+  echoGain.gain.value =
+    track.echo / 100;
+
+  source.connect(gain);
+
+  gain.connect(bass);
+
+  bass.connect(treble);
+
+  treble.connect(
+    masterGain
+  );
+
+  if (track.echo > 0) {
+
+    treble.connect(delay);
+
+    delay.connect(echoGain);
+
+    echoGain.connect(
+      masterGain
+    );
+  }
+
+  return source;
+}
+
+
+/*
